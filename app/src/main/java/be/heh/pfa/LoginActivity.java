@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,28 +40,32 @@ public class LoginActivity extends AppCompatActivity {
         db = new DatabaseHelper(this);
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("accountAddress", null);
+        editor.putString("name", null);
         editor.putBoolean("isConnected", false);
         editor.apply();
 
-        boolean firstStart = prefs.getBoolean("firstStart", true);
 
-
-        if(firstStart) {
+        if(db.countUsers() < 1) {
             showStartDialog();
         }
+        
+
 
         login_btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent goToRegister = new Intent(LoginActivity.this, SignLambdaActivity.class);
                 startActivity(goToRegister);
-                finish();
             }
         });
 
         login_btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+
 
                 String email = login_et_email.getText().toString().trim();
                 String pwd = login_et_pw.getText().toString().trim();
@@ -72,13 +77,10 @@ public class LoginActivity extends AppCompatActivity {
                 {
                     if(usr != null) {
 
-                        Toast.makeText(LoginActivity.this, "Vous êtes connecté", Toast.LENGTH_SHORT).show();
 
                         if(usr.getRole().equals("admin")) {
 
-                            SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-                            SharedPreferences.Editor editor = prefs.edit();
-                            editor.putString("accountAdress", usr.getEmail());
+                            editor.putString("accountAddress", usr.getEmail());
                             editor.putString("name", usr.getFistname());
                             editor.putBoolean("isConnected", true);
                             editor.apply();
@@ -88,11 +90,24 @@ public class LoginActivity extends AppCompatActivity {
 
                             Intent goToHomeA = new Intent(LoginActivity.this, HomeAdminActivity.class);
                             startActivity(goToHomeA);
+                            Toast.makeText(LoginActivity.this, "Vous êtes connecté. Bienvenue " + prefs.getString("name", "null"), Toast.LENGTH_SHORT).show();
+
 
                         }
                         else {
+
+                                editor.putString("accountAddress", usr.getEmail());
+                                editor.putString("name", usr.getFistname());
+                                editor.putBoolean("isConnected", true);
+                                editor.apply();
+
+                                login_et_email.setText("");
+                                login_et_pw.setText("");
+
                                 Intent goToHomeL = new Intent(LoginActivity.this, HomeLambdaActivity.class);
                                 startActivity(goToHomeL);
+                                Toast.makeText(LoginActivity.this, "Vous êtes connecté. Bienvenue " + prefs.getString("name", "null"), Toast.LENGTH_SHORT).show();
+
                         }
 
                     }

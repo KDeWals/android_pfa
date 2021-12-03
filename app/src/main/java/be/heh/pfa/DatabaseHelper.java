@@ -2,30 +2,23 @@ package be.heh.pfa;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
-import android.content.LocusId;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
-
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-
-
     private static final String DATABASE_NAME="pfa.db";
-    private static final String TABLE_NAME_USER="users";
-    private static final String COL_1_U="ID";
-    private static final String COL_2_U="NAME";
-    private static final String COL_3_U="FIRSTNAME";
-    private static final String COL_4_U="EMAIL";
-    private static final String COL_5_U="PASSWORD";
-    private static final String COL_6_U="ROLE";
-    private static final String COL_7_U="PERM";
+    public static final String TABLE_NAME_USER="users";
+    public static final String COL_1_U="ID";
+    public static final String COL_2_U="NAME";
+    public static final String COL_3_U="FIRSTNAME";
+    public static final String COL_4_U="EMAIL";
+    public static final String COL_5_U="PASSWORD";
+    public static final String COL_6_U="ROLE";
+    public static final String COL_7_U="PERM";
     private static final String[] COLUMNS = {
             COL_1_U, COL_2_U, COL_3_U, COL_4_U, COL_5_U, COL_6_U, COL_7_U
     };
@@ -65,14 +58,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put("NAME", name);
         contentValues.put("FIRSTNAME", firstname);
+        email = email.toLowerCase();
         contentValues.put("EMAIL", email);
         contentValues.put("PASSWORD", password);
         contentValues.put("ROLE", role);
         contentValues.put("PERM", perm);
-
         long res = db.insert("users", null, contentValues);
         db.close();
         return res;
+    }
+
+    public int countUsers(){
+        int acc = 0;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME_USER;
+        Cursor cursor = db.rawQuery(query, null);
+        acc = cursor.getCount();
+        return acc;
+    }
+
+    public void changeUserPermission(String perm, String email){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("PERM", perm);
+        db.update(TABLE_NAME_USER, values, "EMAIL = ?", new String [] {email});
+    }
+
+    public void removeUser(String email)
+    {
+        try (SQLiteDatabase db = this.getWritableDatabase()) {
+            db.delete(TABLE_NAME_USER, "EMAIL = ?", new String[] {email});
+        }
+
     }
 
     public long addAutomate(String name, String ip, int rack, int slot, String type) {
@@ -89,6 +107,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
+    public void deleteAutomateTable(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME_AUTO, null, null);
+        db.close();
+    }
 
 
 //    public void changePerm(User user, String newPerm) {
@@ -131,12 +154,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return user;
 
         } finally {
-            // Using a try/finally is usually the best way to avoid memory leaks.
+
             cursor.close();
 
             // close the database
             db.close();
         }
+    }
+
+    public ArrayList<User> checkAdmin(){
+        ArrayList<User> adminList = new ArrayList<User>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT EMAIL FROM " + TABLE_NAME_USER + " WHERE ROLE = 'admin'";
+        Cursor cursor = db.rawQuery(query, null);
+        User admin = null;
+
+        if(cursor.moveToFirst()) {
+            do {
+                admin = new User();
+                admin.setEmail(cursor.getString(0));
+                adminList.add(admin);
+            }
+            while (cursor.moveToNext());
+        }
+        return adminList;
     }
 
     public Automate getAutomate(String ip) {
@@ -189,7 +230,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ArrayList<User> users = new ArrayList<User>();
         String query = "SELECT * FROM " + TABLE_NAME_USER;
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         User user = null;
 
@@ -199,12 +240,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 user.setId(Integer.parseInt(cursor.getString(0)));
                 user.setName(cursor.getString(1));
                 user.setFirstname(cursor.getString(2));
-                user.setRole(cursor.getString(3));
+                user.setEmail(cursor.getString(3));
+                user.setRole(cursor.getString(5));
+                user.setPerm(cursor.getString(6));
                 users.add(user);
             }
             while (cursor.moveToNext());
         }
         return users;
+    }
+
+    public int deleteAllLambdaUsers(){
+        String sql = "SELECT COUNT(*) FROM " + TABLE_NAME_USER + " WHERE ROLE = 'lambda'";
+        Cursor cur = getReadableDatabase().rawQuery(sql, null);
+        int lambdaCount = cur.getCount();
+        cur.close();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME_USER, "ROLE = ?", new String[] {"lamda"});
+        return lambdaCount;
     }
 
     public User setUser(String email, String passw) {
@@ -261,6 +315,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 return null;
             }
                 do {
+                    /*
+                    HashMap<String, String> plc = new HashMap<>();
+                    plc.put("name", cursor.getString(cursor.getColumnIndex(COL_2_A)));
+                    plc.put("ip", cursor.getString(cursor.getColumnIndex(COL_3_A)));
+                    plc.put("rack", cursor.getString(cursor.getColumnIndex(COL_4_A)));
+                    plc.put("slot", cursor.getString(cursor.getColumnIndex(COL_5_A)));
+                    plc.put("type", cursor.getString(cursor.getColumnIndex(COL_6_A)));
+                    automates.add(plc);
+                */
                     automate = new Automate();
                     automate.setId(Integer.parseInt(cursor.getString(0)));
                     automate.setName(cursor.getString(1));
@@ -279,6 +342,43 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cursor.close();
             db.close();
         }
+    }
+
+    public int deleteAllPLCs(){
+        String sql = "SELECT COUNT(*) FROM " + TABLE_NAME_AUTO;
+        Cursor cur = getReadableDatabase().rawQuery(sql, null);
+        int plcCount = cur.getCount();
+        cur.close();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME_AUTO,null, null);
+        return plcCount;
+    }
+
+    public void deletePLC(String ip){
+
+        try (SQLiteDatabase db = this.getWritableDatabase()) {
+            db.delete(TABLE_NAME_AUTO, "IP = ?", new String[] {ip});
+        }
+    }
+
+    public long countAutomates(){
+
+
+        long PLCcount = 0;
+        String sql = "SELECT COUNT(*) FROM " + TABLE_NAME_AUTO;
+
+        Cursor cur = getReadableDatabase().rawQuery(sql, null);
+
+        if(cur.getCount() > 0) {
+            cur.moveToFirst();
+            PLCcount = cur.getInt(0);
+        }
+        else return 0;
+
+        cur.close();
+
+        return PLCcount;
 
 
     }

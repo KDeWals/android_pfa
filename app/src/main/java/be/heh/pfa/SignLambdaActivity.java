@@ -97,7 +97,7 @@ public class SignLambdaActivity extends AppCompatActivity implements View.OnClic
         if (!name.isEmpty()) {
             if (!firstname.isEmpty()) {
                 if (!email.isEmpty()) {
-                    if (email.length() > 10) {
+                    if (isValidEmail(email)) {
                         if (!pw.isEmpty() && pw.length() > 7) {
                             if (isValidPassword(pw)) {
                                 isValid = true;
@@ -107,7 +107,7 @@ public class SignLambdaActivity extends AppCompatActivity implements View.OnClic
                                 user_et_pw.setError("Entrez au moins un chiffre, une lettre majuscule, et un caractère spécial");
                         } else user_et_pw.setError("Entrez au minimum 8 caractères");
                     } else
-                        user_et_email.setError("Entrez une adresse mail comptant au moins 10 caractères ");
+                        user_et_email.setError("Entrez une adresse mail valide");
                 } else user_et_email.setError("Entrez une adresse mail");
             } else user_et_firstname.setError("Entrez un prénom");
         } else user_et_name.setError("Entrez un nom");
@@ -125,6 +125,19 @@ public class SignLambdaActivity extends AppCompatActivity implements View.OnClic
 
         pattern = Pattern.compile(PASSWORD_PATTERN);
         matcher = pattern.matcher(password);
+
+        return matcher.matches();
+
+    }
+    public boolean isValidEmail(final String email) {
+
+        Pattern pattern;
+        Matcher matcher;
+
+        final String EMAIL_PATTERN = "^[a-z0-9._-]+@[a-z0-9.-].+[a-z]{2,4}$";
+
+        pattern = Pattern.compile(EMAIL_PATTERN);
+        matcher = pattern.matcher(email);
 
         return matcher.matches();
 

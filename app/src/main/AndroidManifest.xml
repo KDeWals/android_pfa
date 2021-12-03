@@ -14,7 +14,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PFA">
-        <activity android:name=".HomeLambdaActivity"></activity>
+        <activity android:name=".AddAutomateActivity"></activity>
+        <activity android:name=".AddUserActivity" />
+        <activity android:name=".ManageAutomatesActivity" />
+        <activity android:name=".ManageUsersActivity" />
+        <activity
+            android:name=".AdminProfileActivity"
+            android:label="@string/title_activity_admin_profile"
+            android:theme="@style/Theme.PFA.NoActionBar" />
+        <activity
+            android:name=".ProfileAdminActivity"
+            android:label="@string/title_activity_profile_admin"
+            android:theme="@style/Theme.PFA.NoActionBar" />
+        <activity android:name=".HomeLambdaActivity" />
         <activity android:name=".HomeAdminActivity" />
         <activity android:name=".SignLambdaActivity" />
         <activity android:name=".CreateSuperUserActivity" />

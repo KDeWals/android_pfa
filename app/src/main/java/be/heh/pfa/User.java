@@ -20,7 +20,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.role = role;
-        this.setPerm(perm);
+        this.perm = perm;
     }
 
     public int getId() {
@@ -53,7 +53,7 @@ public class User {
         return email;
     }
 
-    public void setEmail(String username) {
+    public void setEmail(String email) {
         this.email = email;
     }
 

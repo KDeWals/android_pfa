@@ -28,7 +28,7 @@ public class HomeLambdaActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = prefs.edit();
         String name = prefs.getString("name", null);
 
-
+        lambdahome_tv_welcome.setText(name);
 
     }
 
@@ -86,10 +86,6 @@ public class HomeLambdaActivity extends AppCompatActivity {
                 })
                 .create().show();
 
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("firstStart", false);
-        editor.apply();
     }
 
 

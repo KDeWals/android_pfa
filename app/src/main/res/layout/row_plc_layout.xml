@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="10dip"
+    >
+    <TextView
+        android:id="@+id/plc_name"
+        android:text="NOM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/plc_ip"
+        android:text="Adresse IP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/plc_name"
+        android:layout_marginTop="7dp"
+        android:textSize="12dp" />
+    <TextView
+        android:id="@+id/plc_rack"
+        android:text="rack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/plc_ip"
+        android:layout_marginTop="7dp"
+        android:textSize="12dp" />
+    <TextView
+        android:id="@+id/plc_slot"
+        android:text="slot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/plc_ip"
+        android:paddingLeft="25dp"
+        android:layout_toRightOf="@id/plc_rack"
+        android:layout_marginTop="7dp"
+        android:textSize="12dp" />
+
+
+    <TextView
+        android:id="@+id/plc_type"
+        android:text="Type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/plc_slot"
+        android:layout_alignParentRight="true"
+        android:textSize="12dp"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

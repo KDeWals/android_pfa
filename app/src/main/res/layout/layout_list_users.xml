@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:columnCount="4"
+    android:rowCount="1000"
+    android:padding="6dip"
+    android:id="@+id/gl_users"
+    >
+
+    <TextView
+        android:id="@+id/l_tv_user_name"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_row="0"
+        android:layout_column="0"
+        android:gravity="center"
+        android:text="NOM "
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/l_tv_user_firstname"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_row="0"
+        android:layout_column="1"
+        android:gravity="center"
+        android:text="PRÉNOM "
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/l_tv_user_email"
+        android:layout_width="145dp"
+        android:layout_height="wrap_content"
+        android:layout_row="0"
+        android:layout_column="2"
+        android:gravity="center"
+        android:text="EMAIL "
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/l_tv_user_permission"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_row="0"
+        android:layout_column="3"
+        android:gravity="center"
+        android:text="PERM. "
+        android:textStyle="bold" />
+
+
+
+
+</GridLayout>
