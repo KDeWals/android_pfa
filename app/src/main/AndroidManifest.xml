@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PFA">
-        <activity android:name=".AddAutomateActivity"></activity>
+        <activity android:name=".VueComprimeActivity"></activity>
+        <activity android:name=".PLCViewActivity" />
+        <activity android:name=".AddAutomateActivity" />
         <activity android:name=".AddUserActivity" />
         <activity android:name=".ManageAutomatesActivity" />
         <activity android:name=".ManageUsersActivity" />
@@ -38,6 +40,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

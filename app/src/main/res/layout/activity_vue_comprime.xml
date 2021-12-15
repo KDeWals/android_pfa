@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <TextView
+                android:id="@+id/tv_ac_text"
+                android:text="Informations de l'automate :"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                />
+            <TextView
+                android:id="@+id/tv_ac_plc_infos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IP :  | r:   | s:    "
+                android:layout_toRightOf="@id/tv_ac_text"
+                android:layout_alignBaseline="@id/tv_ac_text"/>
+            <Button
+                android:id="@+id/btn_ac_connect"
+                android:text="@string/connect_to_plc"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/tv_ac_plc_infos"
+                />
+
+            <TextView
+                android:id="@+id/tv_ac_numcode"
+                android:text="Numcode : "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_ac_connect"
+                android:layout_marginLeft="5dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_ac_marche"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:tag="EN_MARCHE"
+                android:text="MARCHE"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/tv_ac_numcode"
+
+                />
+
+            <Switch
+                android:id="@+id/sw_ac_marche"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_ac_marche"
+                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@id/tv_ac_raz_compteur"
+                android:clickable="false"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_ac_5_comprimes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:tag="5_COMPRIMES"
+                android:text="5 COMPRIMES"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/tv_ac_marche"
+                />
+
+            <Switch
+                android:id="@+id/sw_ac_5_comprimes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_ac_5_comprimes"
+                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@id/tv_ac_raz_compteur"
+                android:clickable="false"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_ac_10_comprimes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:tag="10_COMPRIMES"
+                android:text="10 COMPRIMES"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/tv_ac_5_comprimes"
+                />
+
+            <Switch
+                android:id="@+id/sw_ac_10_comprimes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_ac_10_comprimes"
+                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@id/tv_ac_raz_compteur"
+                android:clickable="false"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_ac_15_comprimes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:tag="15_COMPRIMES"
+                android:text="15 COMPRIMES"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/tv_ac_10_comprimes"
+                />
+
+            <Switch
+                android:id="@+id/sw_ac_15_comprimes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_ac_15_comprimes"
+                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@id/tv_ac_raz_compteur"
+                android:clickable="false"
+                />
+
+            <TextView
+                android:id="@+id/tv_ac_raz_compteur"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:tag="RAZ_CPT"
+                android:text="RÀZ Compteur"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/tv_ac_15_comprimes"
+                />
+
+            <Switch
+                android:id="@+id/sw_ac_raz_compteur"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_ac_raz_compteur"
+                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@id/tv_ac_raz_compteur"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_ac_marche_moteur"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:tag="MARCHE MOTEUR"
+                android:text="MARCHE MOTEUR"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@id/sw_ac_marche"
+                android:layout_alignBaseline="@id/sw_ac_marche"
+                />
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_ac_marche_moteur"
+                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@id/tv_ac_marche_moteur"
+                android:clickable="false"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_ac_lampe_5_comprimes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:tag="L_5_COMPRIMES"
+                android:text="L. 5 COMPRIMES"
+                android:layout_marginLeft="120dp"
+                android:layout_toRightOf="@id/tv_ac_marche"
+                android:layout_below="@id/tv_ac_marche_moteur"
+
+                />
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_ac_lampe_5_comprimes"
+                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@id/tv_ac_marche_moteur"
+                android:clickable="false"
+                />
+
+            <TextView
+                android:id="@+id/tv_ac_lampe_10_comprimes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:tag="L_10_COMPRIMES"
+                android:text="L. 10 COMPRIMES"
+                android:layout_marginLeft="120dp"
+                android:layout_toRightOf="@id/tv_ac_marche"
+                android:layout_below="@id/tv_ac_lampe_5_comprimes"
+
+                />
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_ac_lampe_10_comprimes"
+                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@id/tv_ac_marche_moteur"
+                android:clickable="false"
+                />
+
+            <TextView
+                android:id="@+id/tv_ac_lampe_15_comprimes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:tag="L_15_COMPRIMES"
+                android:text="L. 15 COMPRIMES"
+                android:layout_marginLeft="120dp"
+                android:layout_toRightOf="@id/tv_ac_marche"
+                android:layout_below="@id/tv_ac_lampe_10_comprimes"
+                />
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_ac_lampe_15_comprimes"
+                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@id/tv_ac_marche_moteur"
+                android:clickable="false"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_ac_compteur_bouteilles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:tag="CPT_BOUTEILLES"
+                android:text="CPT BOUTEILLES"
+                android:layout_marginLeft="120dp"
+                android:layout_toRightOf="@id/tv_ac_marche"
+                android:layout_below="@id/tv_ac_lampe_15_comprimes"
+                />
+
+            <EditText
+                android:id="@+id/et_ac_compteur_bouteilles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_ac_compteur_bouteilles"
+                android:text="00"
+                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@id/tv_ac_marche_moteur"
+                android:enabled="false"
+                />
+
+            <View
+                android:id="@+id/v_ac_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey"
+                android:layout_below="@id/btn_ac_connect"
+                android:layout_marginTop="220dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="330dp"
+                    android:id="@+id/rl_ac_write"
+                    android:visibility="visible"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_ac_dbb5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:tag="DBB5"
+                        android:text="DBB5"
+                        android:layout_marginLeft="15dp"
+
+                        />
+
+                    <EditText
+                        android:id="@+id/et_ac_dbb5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_ac_dbb5"
+                        android:hint="00000"
+                        android:layout_marginLeft="35dp"
+                        android:layout_toRightOf="@id/tv_ac_dbb5"
+                        android:inputType="number"
+                        android:digits="0123456789"
+                        android:maxLength="5"
+                        />
+
+                    <Button
+                        android:id="@+id/btn_ac_dbb5_write"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Écrire"
+                        android:layout_toRightOf="@id/tv_ac_dbb5"
+                        android:layout_alignBaseline="@id/tv_ac_dbb5"
+                        android:layout_marginLeft="130dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_ac_dbb6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:tag="DBB6"
+                        android:text="DBB6"
+                        android:layout_marginLeft="15dp"
+                        android:layout_below="@id/et_ac_dbb5"
+
+                        />
+
+                    <EditText
+                        android:id="@+id/et_ac_dbb6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_ac_dbb6"
+                        android:hint="00000"
+                        android:layout_marginLeft="35dp"
+                        android:layout_toRightOf="@id/tv_ac_dbb6"
+                        android:inputType="number"
+                        android:digits="0123456789"
+                        android:maxLength="5"
+                        />
+
+                    <Button
+                        android:id="@+id/btn_ac_dbb6_write"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Écrire"
+                        android:layout_toRightOf="@id/tv_ac_dbb6"
+                        android:layout_alignBaseline="@id/tv_ac_dbb6"
+                        android:layout_marginLeft="130dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_ac_dbb7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:tag="DBB7"
+                        android:text="DBB7"
+                        android:layout_marginLeft="15dp"
+                        android:layout_below="@id/et_ac_dbb6"
+
+                        />
+
+                    <EditText
+                        android:id="@+id/et_ac_dbb7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_ac_dbb7"
+                        android:hint="00000"
+                        android:layout_marginLeft="35dp"
+                        android:layout_toRightOf="@id/tv_ac_dbb7"
+                        android:inputType="number"
+                        android:digits="0123456789"
+                        android:maxLength="5"
+                        />
+
+                    <Button
+                        android:id="@+id/btn_ac_dbb7_write"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Écrire"
+                        android:layout_toRightOf="@id/tv_ac_dbb7"
+                        android:layout_alignBaseline="@id/tv_ac_dbb7"
+                        android:layout_marginLeft="130dp"
+                        />
+
+
+                    <TextView
+                        android:id="@+id/tv_ac_dbb8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:tag="DBB8"
+                        android:text="DBB8"
+                        android:layout_marginLeft="15dp"
+                        android:layout_below="@id/et_ac_dbb7"
+
+                        />
+
+                    <EditText
+                        android:id="@+id/et_ac_dbb8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_ac_dbb8"
+                        android:hint="00000"
+                        android:layout_marginLeft="35dp"
+                        android:layout_toRightOf="@id/tv_ac_dbb8"
+                        android:inputType="number"
+                        android:digits="0123456789"
+                        android:maxLength="5"
+                        />
+
+                    <Button
+                        android:id="@+id/btn_ac_dbb8_write"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Écrire"
+                        android:layout_toRightOf="@id/tv_ac_dbb8"
+                        android:layout_alignBaseline="@id/tv_ac_dbb8"
+                        android:layout_marginLeft="130dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_ac_dbw18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:tag="DBW18"
+                        android:text="DBW18"
+                        android:layout_marginLeft="15dp"
+                        android:layout_below="@id/et_ac_dbb8"
+
+                        />
+
+                    <EditText
+                        android:id="@+id/et_ac_dbw18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_ac_dbw18"
+                        android:hint="0000000000"
+                        android:layout_marginLeft="25dp"
+                        android:layout_toRightOf="@id/tv_ac_dbw18"
+                        android:inputType="number"
+                        android:digits="0123456789"
+                        android:maxLength="10"
+                        />
+
+                    <Button
+                        android:id="@+id/btn_ac_dbw18_write"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Écrire"
+                        android:layout_toRightOf="@id/tv_ac_dbw18"
+                        android:layout_alignBaseline="@id/tv_ac_dbw18"
+                        android:layout_marginLeft="150dp"
+                        />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+
+
+
+
+
+    </RelativeLayout>
+
+
+    </ScrollView>
+
+</RelativeLayout>

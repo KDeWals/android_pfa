@@ -14,5 +14,9 @@
         <item>Comprimés</item>
         <item>Liquide</item>
     </string-array>
+    <string name="comprimes">comprimés</string>
+    <string name="liquide">liquide</string>
+    <string name="connect_to_plc">Se connecter à l\'automate</string>
+    <string name="disconnect_from_plc">Se déconnecter de l\'automate</string>
 
 </resources>

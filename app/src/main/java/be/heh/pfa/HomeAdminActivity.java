@@ -101,7 +101,6 @@ public class HomeAdminActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
             showDisconnectDialog();
-            //super.onBackPressed();
             return;
         } else {
             Toast.makeText(getBaseContext(), "Cliquez deux fois pour vous déconnecter",    Toast.LENGTH_SHORT).show();
@@ -143,10 +142,10 @@ public class HomeAdminActivity extends AppCompatActivity {
                 })
                 .create().show();
 
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("firstStart", false);
-        editor.apply();
+//        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+//        SharedPreferences.Editor editor = prefs.edit();
+//        editor.putBoolean("firstStart", false);
+//        editor.apply();
     }
 
     public void showDeleteAllLambdaUsers(){
@@ -158,7 +157,8 @@ public class HomeAdminActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int i) {
 
                         db.deleteAllLambdaUsers();
-                        Log.i("HomeAdminActivity", "Tous les utilisateurs 'lambda' ont été supprimés !");
+                        Log.i("HomeAdminActivity", "Tous les utilisateurs 'lambda' ont été supprimés ! ");
+                        Toast.makeText(HomeAdminActivity.this, "Tous les utilisateurs 'lambda' ont été supprimés !", Toast.LENGTH_SHORT).show();
 
                     }
                 })
@@ -180,8 +180,8 @@ public class HomeAdminActivity extends AppCompatActivity {
                 .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
-
                         db.deleteAllPLCs();
+                        Toast.makeText(HomeAdminActivity.this, "Tous les automates ont été supprimés !", Toast.LENGTH_SHORT).show();
                         Log.i("HomeAdminActivity", "Tous les automates ont été supprimés !");
 
                     }

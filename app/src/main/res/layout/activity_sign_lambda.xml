@@ -23,13 +23,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="Nom :"
+
         />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_et_name"
-        android:inputType="text"
+        android:inputType="textCapCharacters"
         />
 
     <TextView
@@ -43,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/user_et_firstname"
-        android:inputType="text"
+        android:inputType="textCapWords"
         />
 
     <TextView

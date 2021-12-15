@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -55,17 +56,58 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public long addUser(String name, String firstname, String email, String password, String role, String perm) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("NAME", name);
-        contentValues.put("FIRSTNAME", firstname);
+        ContentValues userValues = new ContentValues();
+        userValues.put("NAME", name);
+        userValues.put("FIRSTNAME", firstname);
         email = email.toLowerCase();
-        contentValues.put("EMAIL", email);
-        contentValues.put("PASSWORD", password);
-        contentValues.put("ROLE", role);
-        contentValues.put("PERM", perm);
-        long res = db.insert("users", null, contentValues);
+        userValues.put("EMAIL", email);
+        userValues.put("PASSWORD", password);
+        userValues.put("ROLE", role);
+        userValues.put("PERM", perm);
+        long res = db.insert("users", null, userValues);
         db.close();
         return res;
+    }
+
+    public User setUser(String email, String passw) {
+
+        User user = new User();
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.query(TABLE_NAME_USER,
+                COLUMNS,
+                "EMAIL = ? AND PASSWORD = ? ",
+                new String[] {String.valueOf(email),String.valueOf(passw)},
+                null, null, null, null);
+        final int idIndex = cursor.getColumnIndex(COL_1_U);
+        final int nameIndex = cursor.getColumnIndex(COL_2_U);
+        final int firstnameIndex = cursor.getColumnIndex(COL_3_U);
+        final int emailIndex = cursor.getColumnIndex(COL_4_U);
+        final int pwIndex = cursor.getColumnIndex(COL_5_U);
+        final int roleIndex = cursor.getColumnIndex(COL_6_U);
+        final int permIndex = cursor.getColumnIndex(COL_7_U);
+        try {
+
+            // If moveToFirst() returns false then cursor is empty
+            if(!cursor.moveToFirst()) { return null; }
+            do {
+                user.setId(cursor.getInt(idIndex));
+                user.setName(cursor.getString(nameIndex));
+                user.setFirstname(cursor.getString(firstnameIndex));
+                user.setEmail(cursor.getString(emailIndex));
+                user.setPassword(cursor.getString(pwIndex));
+                user.setRole(cursor.getString(roleIndex));
+                user.setPerm(cursor.getString(permIndex));
+            } while (cursor.moveToNext());
+
+            return user;
+
+        } finally {
+            // Using a try/finally is usually the best way to avoid memory leaks.
+            cursor.close();
+
+            // close the database
+            db.close();
+        }
     }
 
     public int countUsers(){
@@ -83,7 +125,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("PERM", perm);
         db.update(TABLE_NAME_USER, values, "EMAIL = ?", new String [] {email});
+        db.close();
     }
+
 
     public void removeUser(String email)
     {
@@ -107,18 +151,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
+    public void changeAutomateName(String ip, String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("NAME", name);
+        db.update(TABLE_NAME_AUTO, contentValues, "IP = ?", new String[] {ip});
+        db.close();
+    }
+
+    public void changeAutomateNetworkInfo(String oldIp, String newIp, int r, int s){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("IP", newIp);
+        contentValues.put("RACK", r);
+        contentValues.put("SLOT", s);
+        db.update(TABLE_NAME_AUTO, contentValues, "IP = ?", new String[]{oldIp});
+        db.close();
+    }
+
+    public void changeAutomateType(String ip, String type){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("TYPE", type);
+        db.update(TABLE_NAME_AUTO, contentValues, "IP = ?", new String[] {ip});
+        db.close();
+    }
+
     public void deleteAutomateTable(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME_AUTO, null, null);
         db.close();
     }
-
-
-//    public void changePerm(User user, String newPerm) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put("PERM", newPerm);
-//    }
 
 
     public User getUser(String email, String passw) {
@@ -250,57 +313,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return users;
     }
 
-    public int deleteAllLambdaUsers(){
-        String sql = "SELECT COUNT(*) FROM " + TABLE_NAME_USER + " WHERE ROLE = 'lambda'";
-        Cursor cur = getReadableDatabase().rawQuery(sql, null);
-        int lambdaCount = cur.getCount();
-        cur.close();
-
+    public void deleteAllLambdaUsers(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME_USER, "ROLE = ?", new String[] {"lamda"});
-        return lambdaCount;
+
     }
 
-    public User setUser(String email, String passw) {
 
-        User user = new User();
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.query(TABLE_NAME_USER,
-                COLUMNS,
-                "EMAIL = ? AND PASSWORD = ? ",
-                new String[] {String.valueOf(email),String.valueOf(passw)},
-                null, null, null, null);
-        final int idIndex = cursor.getColumnIndex(COL_1_U);
-        final int nameIndex = cursor.getColumnIndex(COL_2_U);
-        final int firstnameIndex = cursor.getColumnIndex(COL_3_U);
-        final int emailIndex = cursor.getColumnIndex(COL_4_U);
-        final int pwIndex = cursor.getColumnIndex(COL_5_U);
-        final int roleIndex = cursor.getColumnIndex(COL_6_U);
-        final int permIndex = cursor.getColumnIndex(COL_7_U);
-        try {
-
-            // If moveToFirst() returns false then cursor is empty
-            if(!cursor.moveToFirst()) { return null; }
-            do {
-                user.setId(cursor.getInt(idIndex));
-                user.setName(cursor.getString(nameIndex));
-                user.setFirstname(cursor.getString(firstnameIndex));
-                user.setEmail(cursor.getString(emailIndex));
-                user.setPassword(cursor.getString(pwIndex));
-                user.setRole(cursor.getString(roleIndex));
-                user.setPerm(cursor.getString(permIndex));
-            } while (cursor.moveToNext());
-
-            return user;
-
-        } finally {
-            // Using a try/finally is usually the best way to avoid memory leaks.
-            cursor.close();
-
-            // close the database
-            db.close();
-        }
-    }
 
     public ArrayList<Automate> getAllAutomates() {
 
@@ -344,15 +363,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public int deleteAllPLCs(){
-        String sql = "SELECT COUNT(*) FROM " + TABLE_NAME_AUTO;
-        Cursor cur = getReadableDatabase().rawQuery(sql, null);
-        int plcCount = cur.getCount();
-        cur.close();
-
+    public void deleteAllPLCs(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME_AUTO,null, null);
-        return plcCount;
     }
 
     public void deletePLC(String ip){

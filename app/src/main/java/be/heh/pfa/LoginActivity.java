@@ -1,5 +1,6 @@
 package be.heh.pfa;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
@@ -14,6 +16,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
+import java.util.Arrays;
+
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -61,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         login_btn_login.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
 
@@ -69,7 +83,16 @@ public class LoginActivity extends AppCompatActivity {
 
                 String email = login_et_email.getText().toString().trim();
                 String pwd = login_et_pw.getText().toString().trim();
-
+                String tmppass = null;
+                /*
+                try {
+                    tmppass = PBKDF2_Encrypt(pwd);
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (InvalidKeySpecException e) {
+                    e.printStackTrace();
+                }
+                 */
                 User usr = db.getUser(email,pwd);
 
 
@@ -83,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("accountAddress", usr.getEmail());
                             editor.putString("name", usr.getFistname());
                             editor.putBoolean("isConnected", true);
+                            editor.putBoolean("isAdmin", true);
                             editor.apply();
 
                             login_et_email.setText("");
@@ -99,6 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.putString("accountAddress", usr.getEmail());
                                 editor.putString("name", usr.getFistname());
                                 editor.putBoolean("isConnected", true);
+                                editor.putBoolean("isAdmin", false);
                                 editor.apply();
 
                                 login_et_email.setText("");
@@ -119,34 +144,6 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
 
-
-
-
-
-
-//                List<User> users = db.getAllUsers();
-//                if(users != null) {
-//                    String[] itemsNames = new String[users.size()];
-//
-//                    for(int i = 0; i < users.size(); i++) {
-//                        itemsNames[i] = users.get(i).toString();
-//
-//                    }
-
-
-
-
-
-
-//                boolean res = db.checkUser(user, pwd);
-//
-//                if(res) {
-//                    Toast.makeText(Login.this, "Connexion réussie",Toast.LENGTH_SHORT).show();
-//                }
-//                else {
-//                    Toast.makeText(Login.this, "Connexion échouée",Toast.LENGTH_SHORT).show();
-//
-//                }
             }
 
         });
@@ -155,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
     private boolean validate() {
         boolean isValid = true;
 
-        String email = login_et_email.getText().toString();
+        String email = login_et_email.getText().toString().toLowerCase();
         String pw = login_et_pw.getText().toString();
 
         if(email.isEmpty()){
@@ -201,7 +198,16 @@ public class LoginActivity extends AppCompatActivity {
         editor.putBoolean("firstStart", false);
         editor.apply();
     }
-
+/*
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public String PBKDF2_Encrypt(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        byte[] salt = new byte[16];
+        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
+        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        byte[] hash = factory.generateSecret(spec).getEncoded();
+        return new String(hash, StandardCharsets.UTF_8);
+    }
+*/
 
 
 }

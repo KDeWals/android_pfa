@@ -1,17 +1,27 @@
 package be.heh.pfa;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 public class AddUserActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -42,6 +52,7 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
         user_btn_add.setOnClickListener(this);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void onClick(View v) {
 
         if (v.getId() == R.id.user_btn_add) {
@@ -56,7 +67,15 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
 
             if (validate()) {
                 if (pwd.equals(pwdconf)) {
-
+                    String tmppass = null;
+                    try {
+                        tmppass = PBKDF2_Encrypt(pwd);
+                        Log.i("AddUserActivity", tmppass);
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    } catch (InvalidKeySpecException e) {
+                        e.printStackTrace();
+                    }
 
                     long val = db.addUser(name, firstname, email, pwd, role, perm);
                     if (val > 0) {
@@ -141,5 +160,16 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
 
         return matcher.matches();
 
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public String PBKDF2_Encrypt(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        byte[] salt = new byte[16];
+
+        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
+        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        byte[] hash = factory.generateSecret(spec).getEncoded();
+        return new String(hash, StandardCharsets.UTF_8);
     }
 }

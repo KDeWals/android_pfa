@@ -1,10 +1,17 @@
 package be.heh.pfa;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.graphics.drawable.DrawableCompat;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -14,6 +21,7 @@ import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 public class AddAutomateActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
@@ -44,6 +52,8 @@ public class AddAutomateActivity extends AppCompatActivity implements View.OnCli
         plc_btn_add.setOnClickListener(this);
         add_plc_cb_type_comprimes.setOnCheckedChangeListener(this);
         add_plc_cb_type_liquide.setOnCheckedChangeListener(this);
+
+
     }
 
 
@@ -113,6 +123,7 @@ public class AddAutomateActivity extends AppCompatActivity implements View.OnCli
     }
 
     public boolean isValidIP(final String ip){
+        String[] ipPart = ip.split("\\.");
         Pattern pattern;
         Matcher matcher;
 
@@ -121,6 +132,14 @@ public class AddAutomateActivity extends AppCompatActivity implements View.OnCli
         pattern = Pattern.compile(IP_PATTERN);
         matcher = pattern.matcher(ip);
 
-        return matcher.matches();
+
+        return matcher.matches() && Integer.parseInt(ipPart[0]) <= 255 &&
+                Integer.parseInt(ipPart[1]) <= 255 &&
+                Integer.parseInt(ipPart[2]) <= 255 &&
+                Integer.parseInt(ipPart[3]) <= 255;
     }
+
+
+
+
 }
