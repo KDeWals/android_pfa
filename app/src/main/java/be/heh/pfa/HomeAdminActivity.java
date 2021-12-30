@@ -10,21 +10,22 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class HomeAdminActivity extends AppCompatActivity {
 
     private static final int TIME_INTERVAL = 500;
     private long mBackPressed;
+    private String email;
+    private String role;
     DatabaseHelper db;
 
     private Button btn_ha_disconnect;
     private androidx.cardview.widget.CardView cv_automate_admin;
     private androidx.cardview.widget.CardView cv_users_admin;
-    private LinearLayout ln_my_profile;
-    private LinearLayout ln_manage_users;
-    private LinearLayout ln_manage_plcs;
+    private androidx.cardview.widget.CardView cv_profile_admin;
+    private androidx.cardview.widget.CardView cv_manage_users;
+    private androidx.cardview.widget.CardView cv_manage_plcs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +33,17 @@ public class HomeAdminActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_admin);
         db = new DatabaseHelper(this);
 
+        Bundle bundle = getIntent().getExtras();
+        email =  bundle.getString("email");
+        role = bundle.getString("role");
+
+
         btn_ha_disconnect = (Button) findViewById(R.id.btn_ha_disconnect);
         cv_automate_admin = (androidx.cardview.widget.CardView) findViewById(R.id.cv_ha_automates);
         cv_users_admin = (androidx.cardview.widget.CardView) findViewById(R.id.cv_ha_users);
-        ln_my_profile = (LinearLayout) findViewById(R.id.home_admin_ln_my_profile);
-        ln_manage_users = (LinearLayout) findViewById(R.id.home_admin_ln_manage_users);
-        ln_manage_plcs = (LinearLayout) findViewById(R.id.home_admin_ln_manage_plcs);
+        cv_profile_admin = (androidx.cardview.widget.CardView) findViewById(R.id.cv_ha_profile);
+        cv_manage_users = (androidx.cardview.widget.CardView) findViewById(R.id.cv_ha_users);
+        cv_manage_plcs = (androidx.cardview.widget.CardView) findViewById(R.id.cv_ha_automates);
 
 
 
@@ -50,11 +56,12 @@ public class HomeAdminActivity extends AppCompatActivity {
 
         });
 
-        ln_my_profile.setOnClickListener(new View.OnClickListener() {
+        cv_profile_admin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent goToMyProfile = new Intent(HomeAdminActivity.this, AdminProfileActivity.class);
+                Intent goToMyProfile = new Intent(HomeAdminActivity.this, ProfileActivity.class);
+                goToMyProfile.putExtra("email", email);
                 startActivity(goToMyProfile);
             }
         });
@@ -64,6 +71,8 @@ public class HomeAdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent goToAutomateAdmin= new Intent(HomeAdminActivity.this, ManageAutomatesActivity.class);
+                goToAutomateAdmin.putExtra("email", email);
+                goToAutomateAdmin.putExtra("role", role);
                 startActivity(goToAutomateAdmin);
             }
         });
@@ -72,6 +81,8 @@ public class HomeAdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent goToUsers = new Intent(HomeAdminActivity.this, ManageUsersActivity.class);
+                goToUsers.putExtra("email", email);
+                goToUsers.putExtra("role", role);
                 startActivity(goToUsers);
             }
         });
@@ -125,11 +136,9 @@ public class HomeAdminActivity extends AppCompatActivity {
                         editor.apply();
 
                         Intent goToLogin = new Intent(HomeAdminActivity.this, LoginActivity.class);
-                        startActivity(goToLogin);
                         finish();
+                        startActivity(goToLogin);
 
-                        Intent superUserIntent = new Intent(HomeAdminActivity.this, LoginActivity.class);
-                        startActivity(superUserIntent);
                     }
                 })
                 .setCancelable(true)

@@ -105,7 +105,7 @@ public class CreateSuperUserActivity extends AppCompatActivity implements View.O
 
                             } else
                                 superuser_et_pw.setError("Entrez au moins un chiffre, une lettre majuscule, et un caractère spécial");
-                        } else superuser_et_pw.setError("Entrez au minimum 12 caractères");
+                        } else superuser_et_pw.setError("Entrez au minimum 13 caractères");
                     } else superuser_et_email.setError("Entrez une adresse mail valide");
                 } else superuser_et_email.setError("Entrez une adresse mail");
             } else superuser_et_firstname.setError("Entrez un prénom");

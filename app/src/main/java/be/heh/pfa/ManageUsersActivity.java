@@ -24,12 +24,19 @@ public class ManageUsersActivity extends AppCompatActivity {
     private DatabaseHelper db;
     private ArrayList<User> users_list;
     final String TAG = "ManageUserActivity";
+    private String email;
+    private String role;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_users);
         db = new DatabaseHelper(this);
+
+        Bundle bundle = getIntent().getExtras();
+        email = bundle.getString("email");
+        role = bundle.getString("role");
+
         users_list = db.getAllUsers();
         getUsers();
 
@@ -47,6 +54,8 @@ public class ManageUsersActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         if (menuItem.getItemId() == R.id.i_mmu_add_user) {
             Intent goToAddUser = new Intent(getApplicationContext(), AddUserActivity.class);
+            goToAddUser.putExtra("email", email);
+            goToAddUser.putExtra("role", role);
             startActivity(goToAddUser);
         }
         return super.onOptionsItemSelected(menuItem);
@@ -89,21 +98,26 @@ public class ManageUsersActivity extends AppCompatActivity {
             Email.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    for(User u : db.checkAdmin()){
-                        if(u.getEmail() != null && u.getEmail().contains(selectedUserMail) &&
-                        db.checkAdmin().size() == 1)
-                        {
-                            // il doit rester au moins un admin valide
-                            Toast.makeText(getBaseContext(),
-                                    "Il doit rester au moins un administrateur valide",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                            // suppression de l'utilisateur
+                    if(role.compareTo(getResources().getString(R.string.admin)) == 0){
+                        for(User u : db.checkAdmin()){
+                            if(u.getEmail() != null && u.getEmail().contains(selectedUserMail) &&
+                                    db.checkAdmin().size() == 1)
+                            {
+                                // il doit rester au moins un admin valide
+                                Toast.makeText(getBaseContext(),
+                                        "Il doit rester au moins un administrateur valide",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                // suppression de l'utilisateur
                                 showDeleteDialog(selectedUserMail);
-
-
+                            }
                         }
+                    }
+                    else {
+                        Toast.makeText(getBaseContext(),
+                                "Vous n'avez pas les droits suffisants pour cette action",
+                                Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -158,7 +172,7 @@ public class ManageUsersActivity extends AppCompatActivity {
                         } else {
                             newPerm[0] = "R";
                         }
-                        db.changeUserPermission(newPerm[0], userMail);
+                        db.changeUserPermission(userMail, newPerm[0]);
                         Log.i("ManageUsersActivity", "Permission de l'utilisateur " + userMail + " modifié !");
 
                         finish();

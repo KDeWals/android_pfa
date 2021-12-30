@@ -1,22 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeLambdaActivity"
-    android:gravity="center_horizontal"
     android:orientation="vertical"
     >
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:gravity="center_horizontal"
-        android:text="Bienvenue, "
-        android:layout_marginTop="20dp"
-        android:id="@+id/homelambda_tv_welcome"
-        />
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        >
 
-</LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            >
+
+            <Button
+                android:id="@+id/btn_hl_disconnect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/red"
+                android:padding="10dp"
+                android:text="Déconnexion"
+                android:textColor="@android:color/white"
+                app:backgroundTint="@color/red"
+            />
+
+            <LinearLayout
+                android:layout_below="@+id/ligne1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                >
+                <androidx.cardview.widget.CardView
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/cv_hl_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    android:layout_margin="15dp"
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/home_lambda_ln_my_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:src="@drawable/baseline_account_box_24"
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:padding="10dp"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Mon profil"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="1dp"
+                            android:background="@color/teal_700"
+                            android:layout_margin="10dp"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Éditer votre profil et modifier vos paramètres"
+                            android:padding="5dp"
+                            />
+                    </LinearLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_below="@+id/ligne2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                >
+                <androidx.cardview.widget.CardView
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/cv_hl_automates"
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    android:layout_margin="15dp"
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/home_lambda_ln_view_plcs"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:src="@drawable/baseline_engineering_24"
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:padding="10dp"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Voir les automates"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="1dp"
+                            android:background="@color/teal_700"
+                            android:layout_margin="10dp"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Voir la liste des automates, s'y connecter, y lire les variables"
+                            android:padding="5dp"
+                            />
+                    </LinearLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+
+    </ScrollView>
+
+</RelativeLayout>

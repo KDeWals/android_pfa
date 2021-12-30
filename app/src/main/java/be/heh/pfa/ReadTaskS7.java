@@ -11,7 +11,7 @@ import be.heh.pfa.Simatic_S7.S7;
 import be.heh.pfa.Simatic_S7.S7Client;
 import be.heh.pfa.Simatic_S7.S7OrderCode;
 
-public class ReadTaskS7 implements Runnable {
+public class ReadTaskS7 {
 
     private View view;
     private Button button;
@@ -21,7 +21,7 @@ public class ReadTaskS7 implements Runnable {
     private int isConnected;
     private int numCPU = -1;
 
-    
+
     public ReadTaskS7(View v, Button b, TextView tv, Automate auto) {
         s7Client = new S7Client();
         this.view = v;
@@ -30,9 +30,7 @@ public class ReadTaskS7 implements Runnable {
         this.automate = auto;
     }
 
-    @SuppressLint("SetTextI18n")
-    @Override
-    public void run() {
+    public void Start() {
         try{
             s7Client.SetConnectionType(S7.S7_BASIC);
             Integer result = s7Client.ConnectTo(automate.getIp(), automate.getRack(), automate.getSlot());
@@ -57,7 +55,7 @@ public class ReadTaskS7 implements Runnable {
     }
 
     public void Stop(){
-            s7Client.Disconnect();
-            Log.i("ReadTaskS7", "Déconnexion de l'automate " + automate.getName());
+        s7Client.Disconnect();
+        Log.i("ReadTaskS7", "Déconnexion de l'automate " + automate.getName());
     }
 }

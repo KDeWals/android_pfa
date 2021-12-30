@@ -33,6 +33,8 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
     private CheckBox add_user_cb_rw_access_rights;
     private Button user_btn_add;
     private String perm = "R";
+    private String email;
+    private String role;
     DatabaseHelper db;
 
     @Override
@@ -41,6 +43,10 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_add_user);
 
         db = new DatabaseHelper(this);
+
+        Bundle bundle = getIntent().getExtras();
+        email = bundle.getString("email");
+        role = bundle.getString("role");
 
         add_user_et_name = findViewById(R.id.add_user_et_name);
         add_user_et_firstname = findViewById(R.id.add_user_et_firstname);
@@ -53,6 +59,7 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+
     public void onClick(View v) {
 
         if (v.getId() == R.id.user_btn_add) {
@@ -83,6 +90,8 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
                         Intent goToManageUsers = new Intent(AddUserActivity.this, ManageUsersActivity.class);
                         finish();
                         goToManageUsers.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        goToManageUsers.putExtra("email", email);
+                        goToManageUsers.putExtra("role", role);
                         startActivity(goToManageUsers);
 
 

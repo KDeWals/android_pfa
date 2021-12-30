@@ -7,34 +7,65 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
+
 
 public class HomeLambdaActivity extends AppCompatActivity {
     private static final int TIME_INTERVAL = 1000;
     private long mBackPressed;
-
-    private TextView lambdahome_tv_welcome;
+    private String email;
+    private String role;
     DatabaseHelper db;
+
+    private Button btn_hl_disconnect;
+    private androidx.cardview.widget.CardView cv_profile_lambda;
+    private androidx.cardview.widget.CardView cv_automates_lambda;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_lambda);
 
-        lambdahome_tv_welcome = findViewById(R.id.homelambda_tv_welcome);
-        db = new DatabaseHelper(this);
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        String name = prefs.getString("name", null);
+        Bundle bundle = getIntent().getExtras();
+        email = bundle.getString("email");
+        role = bundle.getString("role");
 
-        lambdahome_tv_welcome.setText(name);
+        db = new DatabaseHelper(this);
+
+        btn_hl_disconnect = (Button) findViewById(R.id.btn_hl_disconnect);
+        cv_profile_lambda = (androidx.cardview.widget.CardView) findViewById(R.id.cv_hl_profile);
+        cv_automates_lambda = (androidx.cardview.widget.CardView) findViewById(R.id.cv_hl_automates);
+
+        btn_hl_disconnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { showDisconnectDialog(); }
+        });
+
+        cv_profile_lambda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent goToMyProfile = new Intent(HomeLambdaActivity.this, ProfileActivity.class);
+                goToMyProfile.putExtra("email", email);
+                goToMyProfile.putExtra("role", role);
+                startActivity(goToMyProfile);
+            }
+        });
+
+        cv_automates_lambda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent goToMyAutomates = new Intent(HomeLambdaActivity.this, ManageAutomatesActivity.class);
+                goToMyAutomates.putExtra("email", email);
+                goToMyAutomates.putExtra("role", role);
+                startActivity(goToMyAutomates);
+            }
+        });
+
 
     }
-
-
-
-
 
 
 

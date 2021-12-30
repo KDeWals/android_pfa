@@ -120,13 +120,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return acc;
     }
 
-    public void changeUserPermission(String perm, String email){
+    public void changeUserPermission(String email, String perm){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("PERM", perm);
         db.update(TABLE_NAME_USER, values, "EMAIL = ?", new String [] {email});
         db.close();
     }
+
+    public void changeUserName(String mail, String newName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("NAME", newName);
+        db.update(TABLE_NAME_USER, contentValues, "EMAIL = ?", new String[] {mail});
+        db.close();
+    }
+
+    public void changeUserFirstname(String mail, String newFirstname) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("FIRSTNAME", newFirstname);
+        db.update(TABLE_NAME_USER, contentValues, "EMAIL = ?", new String[] {mail});
+        db.close();
+    }
+    public void changeUserPassword(String mail, String newPassword) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("PASSWORD", newPassword);
+        db.update(TABLE_NAME_USER, contentValues, "EMAIL = ?", new String[] {mail});
+        db.close();
+    }
+
 
 
     public void removeUser(String email)
@@ -184,7 +208,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public User getUser(String email, String passw) {
+    public User checkUserLogin(String email, String passw) {
 
         User user = new User();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -224,6 +248,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.close();
         }
     }
+
+    public User getUserInfo(String email) {
+        User user = new User();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME_USER,
+                COLUMNS,
+                "EMAIL = ? ",
+                new String[] {String.valueOf(email)},
+                null, null, null, null);
+        final int idIndex = cursor.getColumnIndex(COL_1_U);
+        final int nameIndex = cursor.getColumnIndex(COL_2_U);
+        final int firstnameIndex = cursor.getColumnIndex(COL_3_U);
+        final int emailIndex = cursor.getColumnIndex(COL_4_U);
+        final int roleIndex = cursor.getColumnIndex(COL_6_U);
+        final int permIndex = cursor.getColumnIndex(COL_7_U);
+        try {
+
+            // If moveToFirst() returns false then cursor is empty
+            if(!cursor.moveToFirst()) { return null; }
+            do {
+                user.setId(cursor.getInt(idIndex));
+                user.setName(cursor.getString(nameIndex));
+                user.setFirstname(cursor.getString(firstnameIndex));
+                user.setEmail(cursor.getString(emailIndex));
+                user.setRole(cursor.getString(roleIndex));
+                user.setPerm(cursor.getString(permIndex));
+            } while (cursor.moveToNext());
+
+            return user;
+
+
+        } finally {
+
+            cursor.close();
+            db.close();
+        }
+    }
+
+
 
     public ArrayList<User> checkAdmin(){
         ArrayList<User> adminList = new ArrayList<User>();

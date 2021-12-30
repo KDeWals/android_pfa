@@ -34,11 +34,18 @@ public class ManageAutomatesActivity extends AppCompatActivity {
     DatabaseHelper db;
     ArrayList<Automate> automateList;
 
+    private String email;
+    private String role;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_automates);
+
+        Bundle bundle = getIntent().getExtras();
+        email =  bundle.getString("email");
+        role = bundle.getString("role");
 
         db = new DatabaseHelper(this);
         automateList = db.getAllAutomates();
@@ -69,17 +76,20 @@ public class ManageAutomatesActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.activity_add_automate, menu);
-
+        if(role.compareTo(getResources().getString(R.string.admin)) == 0) {
+            getMenuInflater().inflate(R.menu.activity_add_automate, menu);
+        }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
+
         if (menuItem.getItemId() == R.id.i_mma_add_plc) {
             Intent intent = new Intent(ManageAutomatesActivity.this, AddAutomateActivity.class);
             startActivity(intent);
         }
+
         return super.onOptionsItemSelected(menuItem);
     }
 
@@ -100,20 +110,24 @@ public class ManageAutomatesActivity extends AppCompatActivity {
                     goToPLCView.putExtra("rack", plc.getRack());
                     goToPLCView.putExtra("slot", plc.getSlot());
                     goToPLCView.putExtra("type", plc.getType());
+                    goToPLCView.putExtra("role", role);
+                    goToPLCView.putExtra("email", email);
                     startActivity(goToPLCView);
 
                 }
             });
-            listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view,
-                                               int position, long id) {
-                    Automate plc;
-                    plc = (Automate) adapter.getItem(position);
-                    showDeleteDialog(plc.getIp());
-                    return true;
-                }
-            });
+            if(role.compareTo(getResources().getString(R.string.admin)) == 0) {
+                listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                                   int position, long id) {
+                        Automate plc;
+                        plc = (Automate) adapter.getItem(position);
+                        showDeleteDialog(plc.getIp());
+                        return true;
+                    }
+                });
+            }
 
         }
     }

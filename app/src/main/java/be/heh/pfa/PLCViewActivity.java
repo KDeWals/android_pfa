@@ -2,9 +2,7 @@ package be.heh.pfa;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -12,7 +10,6 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -38,12 +35,11 @@ public class PLCViewActivity extends AppCompatActivity implements View.OnClickLi
     private Button apv_btn_connect_plc;
     private NetworkInfo network;
     private ConnectivityManager netStatus;
-    private TextView apv_tv_numcode;
-
+    private TextView apv_tv_info;
     private ReadTaskS7 readS7;
     private Automate plc = new Automate();
     DatabaseHelper db;
-    private static PLCViewActivity instance;
+    private User currentUser;
 
 
     @Override
@@ -55,13 +51,15 @@ public class PLCViewActivity extends AppCompatActivity implements View.OnClickLi
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        Bundle plcinfo = getIntent().getExtras();
+        Bundle sessionInfo = getIntent().getExtras();
         db = new DatabaseHelper(this);
 
         netStatus = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
         network = netStatus.getActiveNetworkInfo();
 
+        currentUser = db.getUserInfo(sessionInfo.getString("email"));
 
+        apv_tv_info = findViewById(R.id.tv_apv_info_lambda);
         apv_et_name = findViewById(R.id.et_apv_btn_name);
         apv_et_ip = findViewById(R.id.et_apv_ip);
         apv_et_rack = findViewById(R.id.et_apv_rack);
@@ -76,11 +74,11 @@ public class PLCViewActivity extends AppCompatActivity implements View.OnClickLi
         apv_btn_connect_plc.setOnClickListener(this);
         apv_cb_type_comprimes.setOnCheckedChangeListener(this);
         apv_cb_type_liquide.setOnCheckedChangeListener(this);
-        plc.setName(plcinfo.getString("name"));
-        plc.setIp(plcinfo.getString("ip"));
-        plc.setRack(plcinfo.getInt("rack"));
-        plc.setSlot(plcinfo.getInt("slot"));
-        plc.setType(plcinfo.getString("type"));
+        plc.setName(sessionInfo.getString("name"));
+        plc.setIp(sessionInfo.getString("ip"));
+        plc.setRack(sessionInfo.getInt("rack"));
+        plc.setSlot(sessionInfo.getInt("slot"));
+        plc.setType(sessionInfo.getString("type"));
         apv_et_name.addTextChangedListener(textWatcherName);
         apv_et_ip.addTextChangedListener(textWatcherIp);
 
@@ -94,6 +92,18 @@ public class PLCViewActivity extends AppCompatActivity implements View.OnClickLi
         apv_et_slot.setTag(plc.getSlot());
         if(plc.getType().equals("comprimés")) apv_cb_type_comprimes.setChecked(true);
         else apv_cb_type_liquide.setChecked(true);
+
+        if(currentUser.getPerm().equals("RW") && !currentUser.getRole().equals(getResources().getString(R.string.admin))){
+            greyOutForLambda();
+            apv_tv_info.setText(R.string.rw_lambda);
+        }
+        else if(currentUser.getPerm().equals("R")){
+            greyOutForLambda();
+            apv_tv_info.setText(R.string.r_lambda);
+        }
+        else if(currentUser.getRole().equals(getResources().getString(R.string.admin))){
+            apv_tv_info.setVisibility(View.GONE);
+        }
     }
 
 
@@ -128,6 +138,7 @@ public class PLCViewActivity extends AppCompatActivity implements View.OnClickLi
                         goToPLCVar.putExtra("rack", plc.getRack());
                         goToPLCVar.putExtra("slot", plc.getSlot());
                         goToPLCVar.putExtra("type", plc.getType());
+                        goToPLCVar.putExtra("email", currentUser.getEmail());
                         startActivity(goToPLCVar);
                     }
                 }
@@ -139,13 +150,13 @@ public class PLCViewActivity extends AppCompatActivity implements View.OnClickLi
 
 
 
-    public void changeStateOfEditFields(boolean b){
-            apv_et_name.setEnabled(b);
-            apv_et_ip.setEnabled(b);
-            apv_et_rack.setEnabled(b);
-            apv_et_slot.setEnabled(b);
-            apv_cb_type_comprimes.setEnabled(b);
-            apv_cb_type_liquide.setEnabled(b);
+    public void greyOutForLambda(){
+            apv_et_name.setEnabled(false);
+            apv_et_ip.setEnabled(false);
+            apv_et_rack.setEnabled(false);
+            apv_et_slot.setEnabled(false);
+            apv_cb_type_comprimes.setEnabled(false);
+            apv_cb_type_liquide.setEnabled(false);
     }
 
 

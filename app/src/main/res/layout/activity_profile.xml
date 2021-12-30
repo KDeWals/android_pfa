@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".ProfileActivity">
+
+    <TextView
+        android:id="@+id/tv_welcome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Bienvenue sur votre profil, "
+        android:textAlignment="center"
+        android:gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textAlignment="center"
+        android:text="Vous pouvez modifier vos informations sur cette page"
+        android:drawableLeft="@drawable/ic_lightbulb_outline_black_24dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="center_horizontal" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        >
+
+        <TextView
+            android:id="@+id/tv_ap_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nom :"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/baseline_account_box_24"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            />
+        <EditText
+            android:id="@+id/et_ap_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="name"
+            android:text=""
+            android:inputType="textCapCharacters"
+            android:maxLength="15"
+            android:layout_toRightOf="@id/tv_ap_name"
+            android:layout_alignBaseline="@id/tv_ap_name"
+            />
+        <Button
+            android:id="@+id/btn_ap_name_apply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/et_ap_name"
+            android:layout_alignBaseline="@id/et_ap_name"
+            android:visibility="invisible"
+            />
+
+        <TextView
+            android:id="@+id/tv_ap_firstname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prénom :"
+            android:layout_below="@id/tv_ap_name"
+            android:paddingTop="20dp"
+            android:drawableLeft="@drawable/baseline_account_box_24"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            />
+        <EditText
+            android:id="@+id/et_ap_firstname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="firstname"
+            android:text=""
+            android:inputType="textCapWords"
+            android:maxLength="15"
+            android:layout_toRightOf="@id/tv_ap_firstname"
+            android:layout_alignBaseline="@id/tv_ap_firstname"
+            />
+        <Button
+            android:id="@+id/btn_ap_firstname_apply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/et_ap_firstname"
+            android:layout_alignBaseline="@id/et_ap_firstname"
+            android:visibility="invisible"
+            />
+
+        <TextView
+            android:id="@+id/tv_ap_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email :"
+            android:layout_below="@id/tv_ap_firstname"
+            android:paddingTop="20dp"
+            android:drawableLeft="@drawable/baseline_email_24"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            />
+        <EditText
+            android:id="@+id/et_ap_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="email"
+            android:text=""
+            android:singleLine="true"
+            android:maxLength="15"
+            android:layout_toRightOf="@id/tv_ap_email"
+            android:layout_alignBaseline="@id/tv_ap_email"
+            android:enabled="false"
+            />
+
+        <TextView
+            android:id="@+id/tv_ap_email_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vous ne pouvez pas modifier votre adresse mail"
+            android:textAlignment="center"
+            android:layout_toRightOf="@id/et_ap_email"
+            android:layout_alignBaseline="@id/tv_ap_email"
+            android:drawableLeft="@drawable/exclamation_24"
+            android:gravity="center_horizontal"
+            />
+
+        <TextView
+            android:id="@+id/tv_ap_password_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nouveau mot de passe :"
+            android:layout_below="@id/et_ap_email"
+            android:paddingTop="20dp"
+            android:drawableLeft="@drawable/baseline_lock_24"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            />
+        <EditText
+            android:id="@+id/et_ap_password_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="password"
+            android:text=""
+            android:inputType="textPassword"
+            android:layout_toRightOf="@id/tv_ap_password_new"
+            android:layout_alignBaseline="@id/tv_ap_password_new"
+            />
+
+        <TextView
+            android:id="@+id/tv_ap_password_new_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nouveau mot de passe (confirmation) :"
+            android:layout_below="@id/et_ap_password_new"
+            android:paddingTop="20dp"
+            android:drawableLeft="@drawable/baseline_lock_24"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            />
+        <EditText
+            android:id="@+id/et_ap_password_new_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="password"
+            android:text=""
+            android:inputType="textPassword"
+            android:layout_toRightOf="@id/tv_ap_password_new_confirm"
+            android:layout_alignBaseline="@id/tv_ap_password_new_confirm"
+            />
+        <Button
+            android:id="@+id/btn_ap_password_apply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="confirmer le changement de mot de passe"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/et_ap_password_new_confirm"
+            android:visibility="invisible"
+            />
+
+
+
+
+    </RelativeLayout>
+
+
+    <!--
+        TODO
+
+        Faire le design de modifs de comptes
+        Idée :
+        Information_à_changer : [Edit]
+    Si [Edit] :
+        Information_à_changer : [Champ_text] [OK] [CANCEL]
+
+        Non
+    -->
+</LinearLayout>

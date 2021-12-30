@@ -11,22 +11,10 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
-import java.util.Arrays;
-
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -53,10 +41,10 @@ public class LoginActivity extends AppCompatActivity {
         db = new DatabaseHelper(this);
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("accountAddress", null);
         editor.putString("name", null);
+        editor.putString("email", null);
         editor.putBoolean("isConnected", false);
-        editor.apply();
+        editor.commit();
 
 
         if(db.countUsers() < 1) {
@@ -93,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                  */
-                User usr = db.getUser(email,pwd);
+                User usr = db.checkUserLogin(email,pwd);
 
 
                 if(validate())
@@ -101,9 +89,9 @@ public class LoginActivity extends AppCompatActivity {
                     if(usr != null) {
 
 
-                        if(usr.getRole().equals("admin")) {
+                        if(usr.getRole().compareTo(getResources().getString(R.string.admin)) == 0) {
 
-                            editor.putString("accountAddress", usr.getEmail());
+                            editor.putString("email", usr.getEmail());
                             editor.putString("name", usr.getFistname());
                             editor.putBoolean("isConnected", true);
                             editor.putBoolean("isAdmin", true);
@@ -113,6 +101,9 @@ public class LoginActivity extends AppCompatActivity {
                             login_et_pw.setText("");
 
                             Intent goToHomeA = new Intent(LoginActivity.this, HomeAdminActivity.class);
+                            goToHomeA.putExtra("email", email);
+                            goToHomeA.putExtra("role", getResources().getString(R.string.admin));
+                            finish();
                             startActivity(goToHomeA);
                             Toast.makeText(LoginActivity.this, "Vous êtes connecté. Bienvenue " + prefs.getString("name", "null"), Toast.LENGTH_SHORT).show();
 
@@ -130,6 +121,9 @@ public class LoginActivity extends AppCompatActivity {
                                 login_et_pw.setText("");
 
                                 Intent goToHomeL = new Intent(LoginActivity.this, HomeLambdaActivity.class);
+                                goToHomeL.putExtra("email", email);
+                                goToHomeL.putExtra("role", getResources().getString(R.string.lambda));
+                                finish();
                                 startActivity(goToHomeL);
                                 Toast.makeText(LoginActivity.this, "Vous êtes connecté. Bienvenue " + prefs.getString("name", "null"), Toast.LENGTH_SHORT).show();
 

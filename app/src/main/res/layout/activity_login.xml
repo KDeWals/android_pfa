@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Veuillez vous connecter"
-        android:layout_marginTop="20dp"
+        android:layout_margin="20dp"
         />
 
     <TextView
@@ -21,6 +21,8 @@
         android:layout_height="wrap_content"
         android:text="Adresse mail"
         android:layout_margin="10dp"
+        android:drawableLeft="@drawable/baseline_email_24"
+        android:drawablePadding="5dp"
         />
 
     <EditText
@@ -35,6 +37,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="Mot de passe :"
+        android:drawableLeft="@drawable/baseline_lock_24"
+        android:drawablePadding="5dp"
+
         />
 
     <EditText
@@ -56,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/login_btn_register"
-        android:padding="20dp"
+        android:padding="15dp"
         android:text="S'inscrire"
         />
 

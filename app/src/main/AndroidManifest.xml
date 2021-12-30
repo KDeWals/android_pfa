@@ -21,7 +21,7 @@
         <activity android:name=".ManageAutomatesActivity" />
         <activity android:name=".ManageUsersActivity" />
         <activity
-            android:name=".AdminProfileActivity"
+            android:name=".ProfileActivity"
             android:label="@string/title_activity_admin_profile"
             android:theme="@style/Theme.PFA.NoActionBar" />
         <activity

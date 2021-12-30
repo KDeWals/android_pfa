@@ -18,5 +18,9 @@
     <string name="liquide">liquide</string>
     <string name="connect_to_plc">Se connecter à l\'automate</string>
     <string name="disconnect_from_plc">Se déconnecter de l\'automate</string>
+    <string name="admin">admin</string>
+    <string name="lambda">lambda</string>
+    <string name="r_lambda">"Vous avez uniquement les droits de lecture. \nVous ne pouvez ni modifier les informations de l'automate, ni écrire dans les blocs de données de celui-ci"</string>
+    <string name="rw_lambda">"Vous avez les droits de lecture et d'écriture. \nVous ne pouvez pas modifier les informations de l'automate, toutefois vous pouvez écrire dans les blocs de données de celui-ci"</string>
 
 </resources>
