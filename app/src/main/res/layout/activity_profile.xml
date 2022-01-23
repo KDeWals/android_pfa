@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".ProfileActivity">
+    tools:context=".Activities.ProfileActivity">
+
 
     <TextView
         android:id="@+id/tv_welcome"
@@ -26,6 +27,10 @@
         android:drawableLeft="@drawable/ic_lightbulb_outline_black_24dp"
         android:layout_marginBottom="15dp"
         android:gravity="center_horizontal" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -117,8 +122,6 @@
             android:layout_height="wrap_content"
             android:hint="email"
             android:text=""
-            android:singleLine="true"
-            android:maxLength="15"
             android:layout_toRightOf="@id/tv_ap_email"
             android:layout_alignBaseline="@id/tv_ap_email"
             android:enabled="false"
@@ -134,6 +137,24 @@
             android:layout_alignBaseline="@id/tv_ap_email"
             android:drawableLeft="@drawable/exclamation_24"
             android:gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_ap_info_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="inherit"
+            android:text="Vous pouvez modifier votre mot de passe si vous le souhaitez :
+            \nPour cela veuillez entre votre nouveau mot de passe ainsi que la confirmation de celui-ci.
+            \nUne boîte de dialogue s'ouvrira afin de confirmer le changement avec votre mot de passe actuel."
+            android:drawableLeft="@drawable/ic_lightbulb_outline_black_24dp"
+            android:drawablePadding="5dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:gravity="center_horizontal"
+            android:layout_below="@id/tv_ap_email"
             />
 
         <TextView
@@ -141,8 +162,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nouveau mot de passe :"
-            android:layout_below="@id/et_ap_email"
-            android:paddingTop="20dp"
+            android:layout_below="@id/tv_ap_info_password"
+            android:paddingTop="10dp"
             android:drawableLeft="@drawable/baseline_lock_24"
             android:drawablePadding="5dp"
             android:gravity="center"
@@ -189,6 +210,18 @@
             android:visibility="invisible"
             />
 
+        <Button
+            android:id="@+id/btn_app_delete_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Supprimer mon compte"
+            android:textColor="@color/black"
+            android:layout_below="@id/btn_ap_password_apply"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
+            android:backgroundTint="#ff0000"
+            />
+
 
 
 
@@ -206,4 +239,5 @@
 
         Non
     -->
+    </ScrollView>
 </LinearLayout>

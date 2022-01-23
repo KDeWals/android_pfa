@@ -22,5 +22,6 @@
     <string name="lambda">lambda</string>
     <string name="r_lambda">"Vous avez uniquement les droits de lecture. \nVous ne pouvez ni modifier les informations de l'automate, ni écrire dans les blocs de données de celui-ci"</string>
     <string name="rw_lambda">"Vous avez les droits de lecture et d'écriture. \nVous ne pouvez pas modifier les informations de l'automate, toutefois vous pouvez écrire dans les blocs de données de celui-ci"</string>
-
+    <string name="delete_admin">"\nVous ne pouvez pas supprimer ce compte. (utilisateur admin)"</string>
+    <string name="delete_lambda">"\nVous pouvez également supprimer cet utilisateur. (Attention ! Cette action est irréversible !)"</string>
 </resources>

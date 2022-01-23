@@ -24,4 +24,5 @@
     <style name="Theme.PFA.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="Theme_Dialog" parent="Theme.AppCompat.DayNight.Dialog.Alert"/>
+
 </resources>

@@ -20,4 +20,8 @@ public class PLCConnect {
     public int S7Connect(){
        return s7Client.ConnectTo(automate.getIp(), automate.getRack(), automate.getSlot());
     }
+
+    public S7Client getS7Client(){
+        return s7Client;
+    }
 }

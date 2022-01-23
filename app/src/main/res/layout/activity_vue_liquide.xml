@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activities.VueLiquideActivity"
+    >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <RelativeLayout
+            android:id="@+id/rl_al_plc_read"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <TextView
+                android:id="@+id/tv_al_text"
+                android:text="Informations de l'automate :"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                />
+            <TextView
+                android:id="@+id/tv_al_plc_infos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IP :  | r:   | s:    "
+                android:layout_toRightOf="@id/tv_al_text"
+                android:layout_alignBaseline="@id/tv_al_text"/>
+            <Button
+                android:id="@+id/btn_al_connect"
+                android:text="@string/connect_to_plc"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/tv_al_plc_infos"
+                />
+
+            <TextView
+                android:id="@+id/tv_al_numcode"
+                android:text="Numcode : "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_al_connect"
+                android:layout_marginLeft="5dp"
+                />
+            <TextView
+                android:id="@+id/tv_al_numcode_placeholder"
+                android:text=""
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_al_numcode"
+                android:layout_alignBaseline="@id/tv_al_numcode"
+                android:layout_marginLeft="5dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_al_vanne_1_principale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+
+                android:text="Vanne 1 | Principale"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/tv_al_numcode"
+
+                />
+
+            <Switch
+                android:id="@+id/sw_al_vanne_1_principale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_al_vanne_1_principale"
+                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@id/tv_al_c_auto_manu"
+                android:clickable="false"
+                android:tag="B_VANNE_1_PRINCIPALE"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_al_vanne_2_gauche"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+
+                android:text="Vanne 2 | Gauche"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/tv_al_vanne_1_principale"
+                />
+
+            <Switch
+                android:id="@+id/sw_al_vanne_2_gauche"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_al_vanne_2_gauche"
+                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@id/tv_al_c_auto_manu"
+                android:clickable="false"
+                android:tag="B_VANNE_2_GAUCHE"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_al_vanne_3_centre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+
+                android:text="Vanne 3 | Centre"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/tv_al_vanne_2_gauche"
+                />
+
+            <Switch
+                android:id="@+id/sw_al_vanne_3_centre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_al_vanne_3_centre"
+                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@id/tv_al_c_auto_manu"
+                android:clickable="false"
+                android:tag="B_VANNE_3_CENTRE"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_al_vanne_4_droite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+
+                android:text="Vanne 4 | Droite"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/tv_al_vanne_3_centre"
+                />
+
+            <Switch
+                android:id="@+id/sw_al_vanne_4_droite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_al_vanne_4_droite"
+                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@id/tv_al_c_auto_manu"
+                android:clickable="false"
+                android:tag="B_VANNE_4_DROITE"
+                />
+
+            <TextView
+                android:id="@+id/tv_al_c_auto_manu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+
+                android:text="C. Manu ‹-› Auto"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/tv_al_vanne_4_droite"
+                />
+
+            <Switch
+                android:id="@+id/sw_al_c_auto_manu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_al_c_auto_manu"
+                android:layout_marginLeft="25dp"
+                android:layout_toRightOf="@id/tv_al_c_auto_manu"
+                android:tag="C_AUTO_MANU"
+                />
+
+            <TextView
+                android:id="@+id/tv_al_setpoint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Val. setpoint (en m)"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/tv_al_c_auto_manu"
+                />
+
+            <EditText
+                android:id="@+id/et_al_valeur_setpoint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_al_setpoint"
+                android:tag="SETPOINT"
+                android:text="0.00"
+                android:layout_marginLeft="12dp"
+                android:layout_toRightOf="@id/tv_al_setpoint"
+                android:enabled="false"
+                />
+
+            <TextView
+                android:id="@+id/tv_al_sortie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Val. sortie (en %)"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/tv_al_setpoint"
+                />
+
+            <EditText
+                android:id="@+id/et_al_sortie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_al_sortie"
+                android:tag="SORTIE"
+                android:text="00"
+                android:layout_marginLeft="12dp"
+                android:layout_toRightOf="@id/tv_al_setpoint"
+                android:enabled="false"
+                />
+
+            <TextView
+                android:id="@+id/tv_al_d_vanne_1_principale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="D. Vanne 1 | Principale"
+                android:layout_marginLeft="70dp"
+                android:layout_toRightOf="@id/tv_al_vanne_1_principale"
+                android:layout_alignBaseline="@id/sw_al_vanne_1_principale"
+                />
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_al_d_vanne_1_principale"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/tv_al_d_vanne_1_principale"
+                android:clickable="false"
+                android:tag="VANNE_1_PRINCIPALE"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_al_d_vanne_2_gauche"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+
+                android:text="D. Vanne 2 | Gauche"
+                android:layout_marginLeft="70dp"
+                android:layout_toRightOf="@id/tv_al_vanne_1_principale"
+                android:layout_below="@id/tv_al_d_vanne_1_principale"
+
+                />
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_al_d_vanne_2_gauche"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/tv_al_d_vanne_1_principale"
+                android:clickable="false"
+                android:tag="VANNE_2_GAUCHE"
+                />
+
+            <TextView
+                android:id="@+id/tv_al_d_vanne_3_centre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+
+                android:text="D. Vanne 3 | Centre"
+                android:layout_marginLeft="70dp"
+                android:layout_toRightOf="@id/tv_al_vanne_1_principale"
+                android:layout_below="@id/tv_al_d_vanne_2_gauche"
+
+                />
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_al_d_vanne_3_centre"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/tv_al_d_vanne_1_principale"
+                android:clickable="false"
+                android:tag="VANNE_3_CENTRE"
+                />
+
+            <TextView
+                android:id="@+id/tv_al_d_vanne_4_droite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+
+                android:text="D. Vanne 4 | Droite"
+                android:layout_marginLeft="70dp"
+                android:layout_toRightOf="@id/tv_al_vanne_1_principale"
+                android:layout_below="@id/tv_al_d_vanne_3_centre"
+                />
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_al_d_vanne_4_droite"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/tv_al_d_vanne_1_principale"
+                android:clickable="false"
+                android:tag="VANNE_4_DROITE"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_al_niveau_liquide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Niveau liquide (en m)"
+                android:layout_marginLeft="70dp"
+                android:layout_toRightOf="@id/tv_al_vanne_1_principale"
+                android:layout_below="@id/tv_al_d_vanne_4_droite"
+                />
+
+            <EditText
+                android:id="@+id/et_al_niveau_liquide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_al_niveau_liquide"
+                android:tag="NIVEAU_LIQUIDE"
+                android:text="0.00"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/tv_al_d_vanne_1_principale"
+                android:enabled="false"
+                />
+
+            <TextView
+                android:id="@+id/tv_al_consigne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Consigne (en %)"
+                android:layout_marginLeft="70dp"
+                android:layout_toRightOf="@id/tv_al_setpoint"
+                android:layout_below="@id/tv_al_niveau_liquide"
+                />
+
+            <EditText
+                android:id="@+id/et_al_consigne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_al_consigne"
+                android:tag="CONSIGNE"
+                android:text="0.00"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/tv_al_d_vanne_1_principale"
+                android:enabled="false"
+                />
+
+            <View
+                android:id="@+id/v_al_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey"
+                android:layout_below="@id/btn_al_connect"
+                android:layout_marginTop="290dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/v_al_divider"
+                >
+
+                <RelativeLayout
+                    android:id="@+id/rl_al_plc_write"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="35dp"
+                    android:visibility="visible"
+                    >
+
+
+                    <TextView
+                        android:id="@+id/tv_al_top_row_bloc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="BLOC"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_al_top_row_writing_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_toRightOf="@id/tv_al_top_row_bloc"
+                        android:text="VALEUR"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_al_top_row_reading_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_toRightOf="@id/btn_al_dbb2_write"
+                        android:text="VALEUR PLC"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_al_dbb2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_al_top_row_bloc"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:tag="DBB2"
+                        android:text="DBB2" />
+
+                    <EditText
+                        android:id="@+id/et_al_dbb2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_al_dbb2"
+                        android:layout_marginLeft="15dp"
+                        android:layout_toRightOf="@id/tv_al_dbw24"
+                        android:digits="0123456789ABCDEF"
+                        android:hint="00"
+                        android:inputType="textCapCharacters"
+                        android:maxLength="2"
+                        android:tag="_DBB2" />
+
+                    <Button
+                        android:id="@+id/btn_al_dbb2_write"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_al_dbb2"
+                        android:layout_marginLeft="100dp"
+                        android:layout_toRightOf="@id/tv_al_dbw24"
+                        android:onClick="OnClickWritingAction"
+                        android:text="Écrire" />
+
+                    <EditText
+                        android:id="@+id/et_al_dbb2_r"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_al_dbb2"
+                        android:layout_marginLeft="40dp"
+                        android:layout_toRightOf="@id/btn_al_dbb2_write"
+                        android:enabled="false"
+                        android:hint="00"
+                        android:maxLength="2"
+                        android:tag="DBB2" />
+
+                    <TextView
+                        android:id="@+id/tv_al_dbb3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/et_al_dbb2"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:tag="DBB3"
+                        android:text="DBB3"
+
+                        />
+
+                    <EditText
+                        android:id="@+id/et_al_dbb3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_al_dbb3"
+                        android:layout_marginLeft="15dp"
+                        android:layout_toRightOf="@id/tv_al_dbw24"
+                        android:digits="0123456789ABCDEF"
+                        android:hint="00"
+                        android:inputType="textCapCharacters"
+                        android:maxLength="2"
+                        android:tag="_DBB3" />
+
+                    <Button
+                        android:id="@+id/btn_al_dbb3_write"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_al_dbb3"
+                        android:layout_marginLeft="100dp"
+                        android:layout_toRightOf="@id/tv_al_dbw24"
+                        android:onClick="OnClickWritingAction"
+                        android:text="Écrire" />
+
+                    <EditText
+                        android:id="@+id/et_al_dbb3_r"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_al_dbb3"
+                        android:layout_marginLeft="40dp"
+                        android:layout_toRightOf="@id/btn_al_dbb3_write"
+                        android:enabled="false"
+                        android:hint="00"
+                        android:maxLength="2"
+                        android:tag="DBB3" />
+
+                    <TextView
+                        android:id="@+id/tv_al_dbw24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/et_al_dbb3"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:tag="DBW24"
+                        android:text="DBW24"
+
+                        />
+
+                    <EditText
+                        android:id="@+id/et_al_dbw24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_al_dbw24"
+                        android:layout_marginLeft="15dp"
+                        android:layout_toRightOf="@id/tv_al_dbw24"
+                        android:digits="0123456789"
+                        android:hint="00000"
+                        android:inputType="number"
+                        android:maxLength="5"
+                        android:tag="_DBW24" />
+
+                    <Button
+                        android:id="@+id/btn_al_dbw24_write"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_al_dbw24"
+                        android:layout_marginLeft="100dp"
+                        android:layout_toRightOf="@id/tv_al_dbw24"
+                        android:onClick="OnClickWritingAction"
+                        android:text="Écrire" />
+
+                    <EditText
+                        android:id="@+id/et_al_dbw24_r"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_al_dbw24"
+                        android:layout_marginLeft="40dp"
+                        android:layout_toRightOf="@id/btn_al_dbw24_write"
+                        android:enabled="false"
+                        android:hint="00000"
+                        android:maxLength="5"
+                        android:tag="DBW24" />
+
+                    <TextView
+                        android:id="@+id/tv_al_dbw26"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/et_al_dbw24"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:tag="DBW26"
+                        android:text="DBW26"
+
+                        />
+
+                    <EditText
+                        android:id="@+id/et_al_dbw26"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_al_dbw26"
+                        android:layout_marginLeft="15dp"
+                        android:layout_toRightOf="@id/tv_al_dbw24"
+                        android:digits="0123456789"
+                        android:hint="00000"
+                        android:inputType="number"
+                        android:maxLength="5"
+                        android:tag="_DBW26" />
+
+                    <Button
+                        android:id="@+id/btn_al_dbw26_write"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_al_dbw26"
+                        android:layout_marginLeft="100dp"
+                        android:layout_toRightOf="@id/tv_al_dbw24"
+                        android:onClick="OnClickWritingAction"
+                        android:text="Écrire" />
+
+                    <EditText
+                        android:id="@+id/et_al_dbw26_r"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_al_dbw26"
+                        android:layout_marginLeft="40dp"
+                        android:layout_toRightOf="@id/btn_al_dbw24_write"
+                        android:enabled="false"
+                        android:hint="00000"
+                        android:maxLength="5"
+                        android:tag="DBW26" />
+
+                    <TextView
+                        android:id="@+id/tv_al_dbw28"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/et_al_dbw26"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:tag="DBW28"
+                        android:text="DBW28"
+
+                        />
+
+                    <EditText
+                        android:id="@+id/et_al_dbw28"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_al_dbw28"
+                        android:layout_marginLeft="15dp"
+                        android:layout_toRightOf="@id/tv_al_dbw24"
+                        android:digits="0123456789"
+                        android:hint="00000"
+                        android:inputType="number"
+                        android:maxLength="5"
+                        android:tag="_DBW28" />
+
+                    <Button
+                        android:id="@+id/btn_al_dbw28_write"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_al_dbw28"
+                        android:layout_marginLeft="100dp"
+                        android:layout_toRightOf="@id/tv_al_dbw24"
+                        android:onClick="OnClickWritingAction"
+                        android:text="Écrire" />
+
+                    <EditText
+                        android:id="@+id/et_al_dbw28_r"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_al_dbw28"
+                        android:layout_marginLeft="40dp"
+                        android:layout_toRightOf="@id/btn_al_dbw24_write"
+                        android:enabled="false"
+                        android:hint="00000"
+                        android:maxLength="5"
+                        android:tag="DBW28" />
+
+                    <TextView
+                        android:id="@+id/tv_al_dbw30"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/et_al_dbw28"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:tag="DBW30"
+                        android:text="DBW30"
+
+                        />
+
+                    <EditText
+                        android:id="@+id/et_al_dbw30"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_al_dbw30"
+                        android:layout_marginLeft="15dp"
+                        android:layout_toRightOf="@id/tv_al_dbw24"
+                        android:digits="0123456789"
+                        android:hint="00000"
+                        android:inputType="number"
+                        android:maxLength="5"
+                        android:tag="_DBW30" />
+
+                    <Button
+                        android:id="@+id/btn_al_dbw30_write"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_al_dbw30"
+                        android:layout_marginLeft="100dp"
+                        android:layout_toRightOf="@id/tv_al_dbw24"
+                        android:onClick="OnClickWritingAction"
+                        android:text="Écrire" />
+
+                    <EditText
+                        android:id="@+id/et_al_dbw30_r"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/tv_al_dbw30"
+                        android:layout_marginLeft="40dp"
+                        android:layout_toRightOf="@id/btn_al_dbw24_write"
+                        android:enabled="false"
+                        android:hint="00000"
+                        android:maxLength="5"
+                        android:tag="DBW30" />
+
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+
+
+
+
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+</RelativeLayout>

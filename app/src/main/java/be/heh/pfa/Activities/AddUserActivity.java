@@ -1,4 +1,4 @@
-package be.heh.pfa;
+package be.heh.pfa.Activities;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +23,10 @@ import java.util.regex.Pattern;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
+import be.heh.pfa.DatabaseHelper;
+import be.heh.pfa.R;
+import be.heh.pfa.User;
+
 public class AddUserActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText add_user_et_name;
@@ -35,6 +39,7 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
     private String perm = "R";
     private String email;
     private String role;
+    private User sess;
     DatabaseHelper db;
 
     @Override
@@ -46,7 +51,8 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
 
         Bundle bundle = getIntent().getExtras();
         email = bundle.getString("email");
-        role = bundle.getString("role");
+        sess = db.getUserInfo(email);
+        role = sess.getRole();
 
         add_user_et_name = findViewById(R.id.add_user_et_name);
         add_user_et_firstname = findViewById(R.id.add_user_et_firstname);
@@ -90,8 +96,7 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
                         Intent goToManageUsers = new Intent(AddUserActivity.this, ManageUsersActivity.class);
                         finish();
                         goToManageUsers.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        goToManageUsers.putExtra("email", email);
-                        goToManageUsers.putExtra("role", role);
+                        goToManageUsers.putExtra("email", sess.getEmail());
                         startActivity(goToManageUsers);
 
 
@@ -162,7 +167,7 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
         Pattern pattern;
         Matcher matcher;
 
-        final String EMAIL_PATTERN = "^[a-z0-9._-]+@[a-z0-9.-].+[a-z]{2,4}$";
+        final String EMAIL_PATTERN = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[A-Za-z]{2,4}";
 
         pattern = Pattern.compile(EMAIL_PATTERN);
         matcher = pattern.matcher(email);

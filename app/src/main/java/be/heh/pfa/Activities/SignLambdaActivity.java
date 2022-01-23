@@ -1,4 +1,4 @@
-package be.heh.pfa;
+package be.heh.pfa.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,9 @@ import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import be.heh.pfa.DatabaseHelper;
+import be.heh.pfa.R;
 
 public class SignLambdaActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -134,7 +137,7 @@ public class SignLambdaActivity extends AppCompatActivity implements View.OnClic
         Pattern pattern;
         Matcher matcher;
 
-        final String EMAIL_PATTERN = "^[a-z0-9._-]+@[a-z0-9.-].+[a-z]{2,4}$";
+        final String EMAIL_PATTERN = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[A-Za-z]{2,4}";
 
         pattern = Pattern.compile(EMAIL_PATTERN);
         matcher = pattern.matcher(email);

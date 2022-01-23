@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeAdminActivity"
+    tools:context=".Activities.HomeAdminActivity"
     android:orientation="vertical"
     >
 
@@ -40,30 +40,30 @@
                 android:orientation="horizontal"
                 android:gravity="center"
                 >
+
                 <androidx.cardview.widget.CardView
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
                     android:id="@+id/cv_ha_profile"
                     android:layout_width="160dp"
                     android:layout_height="190dp"
                     android:layout_margin="15dp"
-                    >
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
 
 
                     <LinearLayout
                         android:id="@+id/home_admin_ln_my_profile"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:orientation="vertical">
 
                         <ImageView
-                            android:src="@drawable/baseline_account_box_24"
                             android:layout_width="64dp"
                             android:layout_height="64dp"
                             android:padding="10dp"
-                            />
+                            android:src="@drawable/baseline_account_box_24" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -74,16 +74,15 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="@color/teal_700"
                             android:layout_margin="10dp"
-                            />
+                            android:background="@color/teal_700" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Éditer votre profil et modifier vos paramètres"
                             android:padding="5dp"
-                            />
+                            android:text="Éditer votre profil et modifier vos paramètres" />
                     </LinearLayout>
 
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PLCViewActivity"
+    tools:context=".Activities.PLCViewActivity"
     android:orientation="vertical"
     android:paddingRight="10dp"
     android:paddingLeft="10dp"
@@ -82,12 +82,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="192.168.0.1"
-                android:inputType="number"
-                android:digits = "0123456789."
                 android:maxLength="15"
                 android:layout_toRightOf="@id/tv_apv_ip"
                 android:layout_toEndOf="@id/tv_apv_ip"
                 android:layout_alignBaseline="@id/tv_apv_ip"
+                android:enabled="false"
                 />
             <TextView
                 android:id="@+id/tv_apv_rack"

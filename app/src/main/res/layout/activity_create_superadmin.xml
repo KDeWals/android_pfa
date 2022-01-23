@@ -4,10 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateSuperUserActivity"
+    tools:context=".Activities.CreateSuperUserActivity"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     >
+
+
+
 
     <TextView
         android:layout_width="match_parent"
@@ -32,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/superuser_et_name"
-        android:inputType="text"
+        android:inputType="textCapCharacters"
 
         />
 
@@ -49,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/superuser_et_firstname"
-        android:inputType="text"
+        android:inputType="textCapWords"
         />
 
     <TextView
@@ -107,5 +110,6 @@
         android:layout_height="wrap_content"
         android:padding="15dp"
         android:text="S'inscrire" />
+
 
 </LinearLayout>

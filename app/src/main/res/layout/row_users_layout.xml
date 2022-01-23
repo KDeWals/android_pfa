@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    >
+    <TextView
+        android:id="@+id/user_name"
+        android:text="NOM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/user_first_name"
+        android:text="Prénom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/user_name"
+        android:layout_alignBaseline="@id/user_name"
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="5dp"
+        android:textStyle="bold"
+        android:textSize="15dp" />
+    <TextView
+        android:id="@+id/user_mail_address"
+        android:text="email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_name"
+        android:layout_marginTop="7dp"
+        android:textSize="12dp" />
+
+    <TextView
+        android:id="@+id/user_permission"
+        android:text="permission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/user_mail_address"
+        android:layout_alignParentRight="true"
+        android:textSize="12dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="25dp"
+        />
+
+</RelativeLayout>

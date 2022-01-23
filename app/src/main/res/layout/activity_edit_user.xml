@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.AddAutomateActivity"
+    tools:context=".EditUserActivity"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     >
@@ -17,7 +17,7 @@
         >
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:orientation="vertical"
             >
 
@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:gravity="center_horizontal"
-                android:text="Ajouter un automate"
+                android:text="Editer un utilisateur"
                 android:layout_marginTop="20dp"
                 />
 
@@ -38,61 +38,67 @@
                 />
 
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/add_plc_et_name"
+                android:id="@+id/add_user_et_name"
+                android:inputType="textCapCharacters"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Prénom :"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/add_user_et_firstname"
                 android:inputType="textCapWords"
-                android:hint="Automate"
-                android:maxLength="15"
                 />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Adresse IP :"
+                android:text="Adresse mail :"
                 />
 
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/add_plc_et_ip"
-                android:inputType="number"
-                android:hint="192.168.1.10"
-                android:digits = "0123456789."
-                android:maxLength="15"
+                android:id="@+id/add_user_et_email"
+                android:inputType="textEmailAddress"
                 />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Numéro de rack :"
+                android:text="Mot de passe :"
                 />
 
             <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/add_plc_et_rack"
-                android:inputType="number"
-                android:hint="0"
-                android:maxLength="1"
-                />
-
-            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:id="@+id/add_user_et_pw"
+                />
+
+
+            <TextView
                 android:layout_margin="10dp"
-                android:text="Numéro du slot :"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Confirmation du mot de passe :"
                 />
 
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:id="@+id/add_plc_et_slot"
-                android:hint="2"
-                android:maxLength="1"
+                android:inputType="textPassword"
+                android:id="@+id/add_user_et_pwconfirm"
                 />
 
 
@@ -100,36 +106,23 @@
                 android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Choisissez le type de l'automate :"
+                android:text="Cocher pour donner les droits d'écriture et de lecture :"
                 />
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:width="150dp"
-                android:id="@+id/add_plc_cb_type_comprimes"
-                android:text="comprimés"
+                android:id="@+id/add_user_perm"
+                android:text="droits RW ?"
                 />
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="150dp"
-                android:id="@+id/add_plc_cb_type_liquide"
-                android:text="liquide"
-                />
-</LinearLayout>
+
 
             <Button
-                android:id="@+id/plc_btn_add"
+                android:id="@+id/user_btn_add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
-                android:text="Ajouter cet automate" />
-
+                android:text="Ajouter cet utilisateur" />
 
         </LinearLayout>
 

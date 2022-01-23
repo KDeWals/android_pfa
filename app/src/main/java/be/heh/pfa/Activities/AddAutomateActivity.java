@@ -1,17 +1,9 @@
-package be.heh.pfa;
+package be.heh.pfa.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.graphics.drawable.DrawableCompat;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.net.NetworkInfo;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -21,6 +13,9 @@ import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import be.heh.pfa.DatabaseHelper;
+import be.heh.pfa.R;
 
 
 public class AddAutomateActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
@@ -33,6 +28,7 @@ public class AddAutomateActivity extends AppCompatActivity implements View.OnCli
     private CheckBox add_plc_cb_type_liquide;
     private Button plc_btn_add;
     private String type = "";
+    private String email;
     DatabaseHelper db;
 
     @Override
@@ -40,6 +36,8 @@ public class AddAutomateActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_automate);
 
+        Bundle bundle = getIntent().getExtras();
+        email = bundle.getString("email");
         db = new DatabaseHelper(this);
 
         add_plc_et_name = findViewById(R.id.add_plc_et_name);
@@ -89,6 +87,7 @@ public class AddAutomateActivity extends AppCompatActivity implements View.OnCli
                     Toast.makeText(this, "Automate ajouté !", Toast.LENGTH_SHORT).show();
                     Intent goToManageAutomates = new Intent(AddAutomateActivity.this, ManageAutomatesActivity.class);
                     finish();
+                    goToManageAutomates.putExtra("email", email);
                     goToManageAutomates.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(goToManageAutomates);
                 }

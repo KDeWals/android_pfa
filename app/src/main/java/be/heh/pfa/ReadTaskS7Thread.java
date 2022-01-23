@@ -13,24 +13,27 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 
+import java.text.DecimalFormat;
+
 import be.heh.pfa.Simatic_S7.S7;
 import be.heh.pfa.Simatic_S7.S7Client;
 import be.heh.pfa.Simatic_S7.S7OrderCode;
 
 public class ReadTaskS7Thread implements Runnable {
 
-    private Activity activity;
-    private RelativeLayout relativeLayoutRead;
+    private final Activity activity;
+    private final RelativeLayout relativeLayoutRead;
     private RelativeLayout relativeLayoutWrite = null;
-    private Class enumType;
-    private TextView apv_tv_ordercode;
+    private final Class enumType;
+    private final TextView apv_tv_ordercode;
     private int isConnected = 0;
     private int numCPU = -1;
 
-    private Automate automate;
+    private final Automate automate;
     private S7Client s7Client;
-    private PLCHandler plcHandler;
+    private final PLCHandler plcHandler;
     byte[] dataFromPLC = new byte[512];
+    char[] tab;
 
 
     public ReadTaskS7Thread(Activity act, Automate auto, TextView tv, RelativeLayout rlr, Class enumType, PLCHandler handler) {
@@ -99,54 +102,58 @@ public class ReadTaskS7Thread implements Runnable {
                 }
 
                 int childCount = relativeLayoutRead.getChildCount();
-                while (isConnected == 0){
-                    try
-                    {
-                        isConnected = s7Client.ReadArea(S7.S7AreaDB,5,0,34,dataFromPLC);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
 
 
+                    while (isConnected == 0) {
+                        try {
+                            isConnected = s7Client.ReadArea(S7.S7AreaDB, 5, 0, 34, dataFromPLC);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
                     for(int i = 0; i < childCount; i++){
                     View v = relativeLayoutRead.getChildAt(i);
-                    if(v.getTag() != null){
+                        if(v.getTag() != null){
+                            IEnumerationPLC enumerationPLC = (IEnumerationPLC) Enum.valueOf(enumType, v.getTag().toString());
 
-                        IEnumerationPLC enumerationPLC = (IEnumerationPLC) Enum.valueOf(enumType, v.getTag().toString());
-
-                        int _db = enumerationPLC.getPlcDb();
-                        int _dbb = enumerationPLC.getPlcDbb();
-                //        Log.i("ReadTaskS7Thread", v.getTag().toString() + " db : " + _db + " | dbb : " + _dbb);
-
+                            int _db = enumerationPLC.getPlcDb();
+                            int _dbb = enumerationPLC.getPlcDbb();
+                         // Log.i("ReadTaskS7Thread", v.getTag().toString() + " db : " + _db + " | dbb : " + _dbb);
 
 
-                        if(v instanceof Switch){
-                            boolean bool = S7.GetBitAt(dataFromPLC, _db, _dbb);
-                            Switch sw = (Switch) v;
-                            if(sw.isChecked() != bool){
-                                Message msg = new Message();
-                                msg.what = PLCHandler.item_switch;
-                                msg.obj = sw;
-                                plcHandler.sendMessage(msg);
-                                //Log.i("ReadTaskS7Thread", v.getTag().toString() + " : " + bool);
+
+                            if(v instanceof Switch){
+                                boolean bool = S7.GetBitAt(dataFromPLC, _db, _dbb);
+                                Switch sw = (Switch) v;
+                                if(sw.isChecked() != bool){
+                                    Message msg = new Message();
+                                    msg.what = PLCHandler.item_switch;
+                                    msg.obj = sw;
+                                    plcHandler.sendMessage(msg);
+                                    //Log.i("ReadTaskS7Thread", v.getTag().toString() + " : " + bool);
+                                }
                             }
-                        }
 
-                        else if (v instanceof EditText){
-                            int value = S7.GetWordAt(dataFromPLC, _db);
-                            EditText et = (EditText) v;
-                            Message msg = new Message();
-                            msg.what = PLCHandler.item_edittext;
-                            msg.obj = et;
-                            Bundle bundle = new Bundle();
-                            bundle.putString("res", String.valueOf(value));
-                            msg.setData(bundle);
-                            plcHandler.sendMessage(msg);
-                            //Log.i("ReadTaskS7Thread", v.getTag().toString() + " : " + value);
-                        }
+                            else if (v instanceof EditText){
+                                int value = S7.GetWordAt(dataFromPLC, _db);
+                                EditText et = (EditText) v;
+                                Message msg = new Message();
+                                msg.what = PLCHandler.item_edittext;
+                                msg.obj = et;
+                                Bundle bundle = new Bundle();
+                                if(v.getTag().equals("SETPOINT") || v.getTag().equals("NIVEAU_LIQUIDE")) {
+                                    float f;
+                                    f = (float) value / 100;
+                                    bundle.putString("res", String.valueOf(f));
+                                }
+                                else { bundle.putString("res", String.valueOf(value)); }
 
-}
+                                msg.setData(bundle);
+                                plcHandler.sendMessage(msg);
+                                //Log.i("ReadTaskS7Thread", v.getTag().toString() + " : " + value);
+                            }
+
+                        }
 
                     }
 
@@ -154,23 +161,43 @@ public class ReadTaskS7Thread implements Runnable {
                         int childCountW = relativeLayoutWrite.getChildCount();
                         for(int i = 0; i < childCountW; i++){
                             View v = relativeLayoutWrite.getChildAt(i);
-                            if(v.getTag() != null){
+                            if(v.getTag() != null && v.getTag().toString().startsWith("DB")){
                                 IEnumerationPLC enumerationPLC = (IEnumerationPLC) Enum.valueOf(enumType, v.getTag().toString());
 
                                 int _db = enumerationPLC.getPlcDb();
-                                int _dbb = enumerationPLC.getPlcDbb();
+
 
                                 if (v instanceof EditText){
                                     int value = S7.GetWordAt(dataFromPLC, _db);
+                                    String t = Integer.toBinaryString(value);
+                             //       Log.i("ReadTaskS7Thread", t);
                                     EditText et = (EditText) v;
                                     Message msg = new Message();
                                     msg.what = PLCHandler.item_edittext;
                                     msg.obj = et;
                                     Bundle bundle = new Bundle();
-                                    if(!v.getTag().equals("DBW18")){
-                                        bundle.putString("res", Integer.toHexString(Integer.parseInt(String.valueOf(value))).toUpperCase());
+                                    if(!v.getTag().toString().startsWith("DBW")){
+
+                                        // getting word at left
+                                        String str = Integer.toString(value, 2);
+
+                                        tab = str.toCharArray();
+                                        int count = tab.length;
+                                        StringBuilder tmp = new StringBuilder(str);
+                                        while(count != 16){
+                                            tmp.insert(0, "0");
+                                            count++;
+                                        }
+                                        String test;
+                                        test = tmp.substring(0, 8);
+                                        String hex = String.valueOf(Byte.parseByte(test, 2));
+                                       // Log.i("ReadTaskS7Thread", v.getTag() + Integer.toHexString(Integer.parseInt(hex)));
+
+                                        bundle.putString("res", Integer.toHexString(Integer.parseInt(hex)).toUpperCase());
+
                                     }
-                                    else bundle.putString("res", String.valueOf(Integer.parseInt(String.valueOf(value))));
+                                    else bundle.putString("res", Integer.toString(value));
+                                //    Log.i("ReadTaskS7Thread", v.getTag().toString() + Integer.toString(value, 16));
                                     msg.setData(bundle);
                                     plcHandler.sendMessage(msg);
                                     //Log.i("ReadTaskS7Thread", v.getTag().toString() + " : " + value);

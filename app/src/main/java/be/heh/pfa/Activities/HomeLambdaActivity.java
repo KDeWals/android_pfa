@@ -1,4 +1,4 @@
-package be.heh.pfa;
+package be.heh.pfa.Activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import be.heh.pfa.DatabaseHelper;
+import be.heh.pfa.R;
 
 
 public class HomeLambdaActivity extends AppCompatActivity {

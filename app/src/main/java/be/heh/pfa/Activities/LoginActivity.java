@@ -1,4 +1,4 @@
-package be.heh.pfa;
+package be.heh.pfa.Activities;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -15,6 +15,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import be.heh.pfa.DatabaseHelper;
+import be.heh.pfa.R;
+import be.heh.pfa.User;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -39,12 +43,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         db = new DatabaseHelper(this);
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("name", null);
-        editor.putString("email", null);
-        editor.putBoolean("isConnected", false);
-        editor.commit();
+
 
 
         if(db.countUsers() < 1) {
@@ -81,21 +80,16 @@ public class LoginActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                  */
-                User usr = db.checkUserLogin(email,pwd);
+                User userLogin = db.checkUserLogin(email,pwd);
 
 
                 if(validate())
                 {
-                    if(usr != null) {
+                    if(userLogin != null) {
 
 
-                        if(usr.getRole().compareTo(getResources().getString(R.string.admin)) == 0) {
+                        if(userLogin.getRole().compareTo(getResources().getString(R.string.admin)) == 0) {
 
-                            editor.putString("email", usr.getEmail());
-                            editor.putString("name", usr.getFistname());
-                            editor.putBoolean("isConnected", true);
-                            editor.putBoolean("isAdmin", true);
-                            editor.apply();
 
                             login_et_email.setText("");
                             login_et_pw.setText("");
@@ -105,17 +99,12 @@ public class LoginActivity extends AppCompatActivity {
                             goToHomeA.putExtra("role", getResources().getString(R.string.admin));
                             finish();
                             startActivity(goToHomeA);
-                            Toast.makeText(LoginActivity.this, "Vous êtes connecté. Bienvenue " + prefs.getString("name", "null"), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Vous êtes connecté. Bienvenue " + userLogin.getFistname(), Toast.LENGTH_SHORT).show();
 
 
                         }
                         else {
 
-                                editor.putString("accountAddress", usr.getEmail());
-                                editor.putString("name", usr.getFistname());
-                                editor.putBoolean("isConnected", true);
-                                editor.putBoolean("isAdmin", false);
-                                editor.apply();
 
                                 login_et_email.setText("");
                                 login_et_pw.setText("");
@@ -125,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                                 goToHomeL.putExtra("role", getResources().getString(R.string.lambda));
                                 finish();
                                 startActivity(goToHomeL);
-                                Toast.makeText(LoginActivity.this, "Vous êtes connecté. Bienvenue " + prefs.getString("name", "null"), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Vous êtes connecté. Bienvenue " + userLogin.getFistname(), Toast.LENGTH_SHORT).show();
 
                         }
 
@@ -179,9 +168,9 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
                         dialogInterface.dismiss();
+                        finish();
                         Intent superAdminIntent = new Intent(LoginActivity.this, CreateSuperUserActivity.class);
                         startActivity(superAdminIntent);
-                        finish();
                     }
                 })
                 .setCancelable(false)

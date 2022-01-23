@@ -1,32 +1,27 @@
-package be.heh.pfa;
+package be.heh.pfa.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.graphics.drawable.DrawableCompat;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+
+import be.heh.pfa.Automate;
+import be.heh.pfa.DatabaseHelper;
+import be.heh.pfa.ListAdapter;
+import be.heh.pfa.R;
+import be.heh.pfa.User;
 
 
 public class ManageAutomatesActivity extends AppCompatActivity {
@@ -36,6 +31,7 @@ public class ManageAutomatesActivity extends AppCompatActivity {
 
     private String email;
     private String role;
+    private User sess;
 
 
     @Override
@@ -43,11 +39,14 @@ public class ManageAutomatesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_automates);
 
+        db = new DatabaseHelper(this);
+
         Bundle bundle = getIntent().getExtras();
         email =  bundle.getString("email");
-        role = bundle.getString("role");
 
-        db = new DatabaseHelper(this);
+        sess = db.getUserInfo(email);
+        role = sess.getRole();
+
         automateList = db.getAllAutomates();
         getAutomates();
 
@@ -61,7 +60,13 @@ public class ManageAutomatesActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Toast.makeText(ManageAutomatesActivity.this, "Nombre de API : " + db.countAutomates(), Toast.LENGTH_SHORT).show();
+        if(db.countAutomates() == 0){
+            Toast.makeText(ManageAutomatesActivity.this, "Il n'y aucun automate. Veuillez en ajouter un avec le bouton + en haut à droite.", Toast.LENGTH_LONG).show();
+
+        }
+//        else {
+//            Toast.makeText(ManageAutomatesActivity.this, "Nombre de API : " + db.countAutomates(), Toast.LENGTH_SHORT).show();
+//        }
 
 
     }
@@ -87,6 +92,7 @@ public class ManageAutomatesActivity extends AppCompatActivity {
 
         if (menuItem.getItemId() == R.id.i_mma_add_plc) {
             Intent intent = new Intent(ManageAutomatesActivity.this, AddAutomateActivity.class);
+            intent.putExtra("email", email);
             startActivity(intent);
         }
 
@@ -133,8 +139,8 @@ public class ManageAutomatesActivity extends AppCompatActivity {
     }
 
     public void showDeleteDialog(String plcIp){
-        new AlertDialog.Builder(this)
-                .setTitle("Suppression d'un automate")
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setTitle("Suppression d'un automate")
                 .setMessage("Confirmer la suppression de l'automate" +
                         " ayant l'adresse IP : " + plcIp)
                 .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
@@ -156,8 +162,11 @@ public class ManageAutomatesActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int i) {
                         dialog.dismiss();
                     }
-                })
-                .create().show();
+                });
+                AlertDialog alert = dialog.create();
+                alert.show();
+                Button dbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+                dbutton.setTextColor(Color.rgb(255,0,0));
 
     }
 

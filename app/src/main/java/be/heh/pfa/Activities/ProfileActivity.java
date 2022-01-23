@@ -1,4 +1,4 @@
-package be.heh.pfa;
+package be.heh.pfa.Activities;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -21,6 +22,10 @@ import android.widget.Toast;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import be.heh.pfa.DatabaseHelper;
+import be.heh.pfa.R;
+import be.heh.pfa.User;
+
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView tv_welcome;
@@ -32,6 +37,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private Button btn_ap_update_name;
     private Button btn_ap_update_firstname;
     private Button btn_ap_update_password;
+    private Button btn_app_delete_account;
     private String email;
     private User user;
 
@@ -60,6 +66,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         btn_ap_update_firstname.setOnClickListener(this);
         btn_ap_update_password = (Button) findViewById(R.id.btn_ap_password_apply);
         btn_ap_update_password.setOnClickListener(this);
+        btn_app_delete_account = (Button) findViewById(R.id.btn_app_delete_account);
+        btn_app_delete_account.setOnClickListener(this);
         et_ap_name.addTextChangedListener(textWatcherName);
         et_ap_firstname.addTextChangedListener(textWatcherFirstname);
         et_ap_password.addTextChangedListener(textWatcherPassword);
@@ -67,7 +75,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         user = db.getUserInfo(email);
 
         String str = tv_welcome.getText().toString();
-        tv_welcome.setText(String.format("%s%s", str, user.getName()));
+        tv_welcome.setText(String.format("%s%s", str, user.getFistname()));
         if(user.getRole().equals("admin")) tv_welcome.setTextColor(Color.rgb(255, 0, 0));
         et_ap_name.setText(user.getName());
         et_ap_name.setTag(user.getName());
@@ -76,6 +84,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         et_ap_password.setTag("password");
 
         et_ap_email.setText(user.getEmail());
+
+        if(user.getRole().compareTo(getResources().getString(R.string.admin)) == 0){
+            btn_app_delete_account.setVisibility(View.GONE);
+        }
 
     }
 
@@ -127,6 +139,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                                 password.setLayoutParams(layoutParams);
                             dialog.setView(password);
                             password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            password.setHint("Entrez votre mot de passe actuel");
                             dialog.setPositiveButton("Confirmer", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -150,6 +163,45 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                             dialog.setNegativeButton("Annuler", null);
                             dialog.create().show();
                 }
+                break;
+        case R.id.btn_app_delete_account :
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setIcon(R.drawable.exclamation_24);
+                dialog.setTitle("Confirmation de la suppression de votre compte.");
+                dialog.setMessage("Votre compte sera supprimé, vous allez être déconnecté et il vous sera nécessaire de vous inscrire à nouveau." +
+                        "\nEntrez votre mot de passe afin de confirmer la suppression de votre compte.");
+
+                final EditText password = new EditText(ProfileActivity.this);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT);
+                password.setLayoutParams(layoutParams);
+                dialog.setView(password);
+                password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                password.setHint("Entrez votre mot de passe actuel");
+                dialog.setPositiveButton("Supprimer mon compte", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                            if(db.checkUserLogin(user.getEmail(), password.getText().toString()) != null && !password.getText().toString().isEmpty()) {
+                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                db.removeUser(user.getEmail());
+                                Toast.makeText(ProfileActivity.this, "Votre compte a été supprimé avec succès", Toast.LENGTH_LONG   ).show();
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }
+                            else {
+                                Toast.makeText(ProfileActivity.this, "Mot de passe incorrect", Toast.LENGTH_SHORT).show();
+                            }
+                    }
+                });
+                dialog.setCancelable(true);
+                dialog.setNegativeButton("Annuler", null);
+                AlertDialog alert = dialog.create();
+                alert.show();
+                Button dbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+                dbutton.setTextColor(Color.rgb(255, 0, 0));
+
                 break;
         }
     }
@@ -280,4 +332,5 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         return matcher.matches();
 
     }
+
 }

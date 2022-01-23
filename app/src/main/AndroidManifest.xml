@@ -14,33 +14,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PFA">
-        <activity android:name=".VueComprimeActivity"></activity>
-        <activity android:name=".PLCViewActivity" />
-        <activity android:name=".AddAutomateActivity" />
-        <activity android:name=".AddUserActivity" />
-        <activity android:name=".ManageAutomatesActivity" />
-        <activity android:name=".ManageUsersActivity" />
+        <activity android:name=".Activities.VueLiquideActivity"></activity>
+        <activity android:name=".EditUserActivity" />
+        <activity android:name=".Activities.VueComprimeActivity" />
+        <activity android:name=".Activities.PLCViewActivity" />
+        <activity android:name=".Activities.AddAutomateActivity" />
+        <activity android:name=".Activities.AddUserActivity" />
+        <activity android:name=".Activities.ManageAutomatesActivity" />
+        <activity android:name=".Activities.ManageUsersActivity" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".Activities.ProfileActivity"
             android:label="@string/title_activity_admin_profile"
             android:theme="@style/Theme.PFA.NoActionBar" />
         <activity
             android:name=".ProfileAdminActivity"
             android:label="@string/title_activity_profile_admin"
             android:theme="@style/Theme.PFA.NoActionBar" />
-        <activity android:name=".HomeLambdaActivity" />
-        <activity android:name=".HomeAdminActivity" />
-        <activity android:name=".SignLambdaActivity" />
-        <activity android:name=".CreateSuperUserActivity" />
+        <activity android:name=".Activities.HomeLambdaActivity" />
+        <activity android:name=".Activities.HomeAdminActivity" />
+        <activity android:name=".Activities.SignLambdaActivity" />
+        <activity android:name=".Activities.CreateSuperUserActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

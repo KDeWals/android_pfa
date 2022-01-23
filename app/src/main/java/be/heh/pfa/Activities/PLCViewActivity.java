@@ -1,4 +1,4 @@
-package be.heh.pfa;
+package be.heh.pfa.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,6 +19,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import be.heh.pfa.Automate;
+import be.heh.pfa.DatabaseHelper;
+import be.heh.pfa.PLCConnect;
+import be.heh.pfa.R;
+import be.heh.pfa.ReadTaskS7;
+import be.heh.pfa.User;
 
 public class PLCViewActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
@@ -80,7 +87,8 @@ public class PLCViewActivity extends AppCompatActivity implements View.OnClickLi
         plc.setSlot(sessionInfo.getInt("slot"));
         plc.setType(sessionInfo.getString("type"));
         apv_et_name.addTextChangedListener(textWatcherName);
-        apv_et_ip.addTextChangedListener(textWatcherIp);
+        apv_et_rack.addTextChangedListener(textWatcherRack);
+        apv_et_slot.addTextChangedListener(textWatcherSlot);
 
         apv_et_name.setText(plc.getName());
         apv_et_name.setTag(plc.getName());
@@ -119,14 +127,14 @@ public class PLCViewActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.apv_btn_network_info :
                 db.changeAutomateNetworkInfo(
                         plc.getIp(),
-                        String.valueOf(apv_et_ip.getText()),
                         Integer.valueOf(String.valueOf(apv_et_rack.getText())),
                         Integer.valueOf(String.valueOf(apv_et_slot.getText())));
-                Toast.makeText(PLCViewActivity.this, "Informations réseau de l'automate modifiés", Toast.LENGTH_SHORT).show();
-                plc.setIp(apv_et_ip.getText().toString());
-                plc.setRack(Integer.parseInt(apv_et_rack.getText().toString()));
-                plc.setSlot(Integer.parseInt(apv_et_slot.getText().toString()));
-                apv_btn_update_network_info.setVisibility(View.INVISIBLE);
+
+                    Toast.makeText(PLCViewActivity.this, "Informations réseau de l'automate modifiés", Toast.LENGTH_SHORT).show();
+                    plc.setIp(apv_et_ip.getText().toString());
+                    plc.setRack(Integer.parseInt(apv_et_rack.getText().toString()));
+                    plc.setSlot(Integer.parseInt(apv_et_slot.getText().toString()));
+                    apv_btn_update_network_info.setVisibility(View.INVISIBLE);
                 break;
 
             case R.id.apv_btn_go_to_var :
@@ -141,6 +149,19 @@ public class PLCViewActivity extends AppCompatActivity implements View.OnClickLi
                         goToPLCVar.putExtra("email", currentUser.getEmail());
                         startActivity(goToPLCVar);
                     }
+                    else if(plc.getType().equals("liquide")){
+                        Intent goToPLCVar = new Intent(PLCViewActivity.this, VueLiquideActivity.class);
+                        goToPLCVar.putExtra("name", plc.getName());
+                        goToPLCVar.putExtra("ip", plc.getIp());
+                        goToPLCVar.putExtra("rack", plc.getRack());
+                        goToPLCVar.putExtra("slot", plc.getSlot());
+                        goToPLCVar.putExtra("type", plc.getType());
+                        goToPLCVar.putExtra("email", currentUser.getEmail());
+                        startActivity(goToPLCVar);
+                    }
+                }
+                else {
+                    Toast.makeText(PLCViewActivity.this, "Veuillez vous connecter au réseau de l'automate", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -196,7 +217,7 @@ public class PLCViewActivity extends AppCompatActivity implements View.OnClickLi
 
         }
     };
-    private TextWatcher textWatcherIp= new TextWatcher() {
+    private TextWatcher textWatcherRack= new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -204,7 +225,23 @@ public class PLCViewActivity extends AppCompatActivity implements View.OnClickLi
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            if(apv_et_ip.getTag() != null) apv_btn_update_network_info.setVisibility(View.VISIBLE);
+            if(apv_et_rack.getTag() != null) apv_btn_update_network_info.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+    private TextWatcher textWatcherSlot= new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            if(apv_et_slot.getTag() != null) apv_btn_update_network_info.setVisibility(View.VISIBLE);
         }
 
         @Override

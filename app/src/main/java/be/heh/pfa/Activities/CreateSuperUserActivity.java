@@ -1,4 +1,4 @@
-package be.heh.pfa;
+package be.heh.pfa.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import be.heh.pfa.DatabaseHelper;
+import be.heh.pfa.R;
 
 
 public class CreateSuperUserActivity extends AppCompatActivity implements View.OnClickListener {
@@ -94,8 +97,8 @@ public class CreateSuperUserActivity extends AppCompatActivity implements View.O
         String pw = superuser_et_pw.getText().toString();
 
 
-        if (!name.isEmpty()) {
-            if (!firstname.isEmpty()) {
+        if (!name.isEmpty() && isValidname(name)) {
+            if (!firstname.isEmpty() && isValidname(firstname)) {
                 if (!email.isEmpty()) {
                     if (isValidEmail(email)) {
                         if (!pw.isEmpty() && pw.length() > 12) {
@@ -108,8 +111,8 @@ public class CreateSuperUserActivity extends AppCompatActivity implements View.O
                         } else superuser_et_pw.setError("Entrez au minimum 13 caractères");
                     } else superuser_et_email.setError("Entrez une adresse mail valide");
                 } else superuser_et_email.setError("Entrez une adresse mail");
-            } else superuser_et_firstname.setError("Entrez un prénom");
-        } else superuser_et_name.setError("Entrez un nom");
+            } else superuser_et_firstname.setError("Entrez un prénom valide");
+        } else superuser_et_name.setError("Entrez un nom valide");
 
         return isValid;
     }
@@ -121,7 +124,7 @@ public class CreateSuperUserActivity extends AppCompatActivity implements View.O
         Pattern pattern;
         Matcher matcher;
 
-        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&+=*])(?=\\S+$).{12,}$";
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&.+=*_])(?=\\S+$).{12,}$";
 
         pattern = Pattern.compile(PASSWORD_PATTERN);
         matcher = pattern.matcher(password);
@@ -135,7 +138,7 @@ public class CreateSuperUserActivity extends AppCompatActivity implements View.O
         Pattern pattern;
         Matcher matcher;
 
-        final String EMAIL_PATTERN = "^[a-z0-9-]+(.[a-z0-9-]+)*@[a-z0-9]+(.[a-z]{2,})$";
+        final String EMAIL_PATTERN = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[A-Za-z]{2,4}";
 
         pattern = Pattern.compile(EMAIL_PATTERN);
         matcher = pattern.matcher(email);
@@ -162,19 +165,19 @@ public class CreateSuperUserActivity extends AppCompatActivity implements View.O
 //        }
 //    }
 
-    // TODO - redo this method
-//    public boolean isValidname(final String password) {
-//
-//        Pattern pattern;
-//        Matcher matcher;
-//
-//        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{12,}$";
-//
-//        pattern = Pattern.compile(PASSWORD_PATTERN);
-//        matcher = pattern.matcher(password);
-//
-//        return matcher.matches();
-//
-//    }
+
+        public boolean isValidname(final String password) {
+
+            Pattern pattern;
+            Matcher matcher;
+
+            final String PASSWORD_PATTERN = "^[A-Za-z]+$";
+
+            pattern = Pattern.compile(PASSWORD_PATTERN);
+            matcher = pattern.matcher(password);
+
+            return matcher.matches();
+
+        }
                 }
 

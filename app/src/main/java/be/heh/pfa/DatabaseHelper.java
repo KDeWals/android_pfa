@@ -183,13 +183,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void changeAutomateNetworkInfo(String oldIp, String newIp, int r, int s){
+    public void changeAutomateNetworkInfo(String ip, int r, int s){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("IP", newIp);
         contentValues.put("RACK", r);
         contentValues.put("SLOT", s);
-        db.update(TABLE_NAME_AUTO, contentValues, "IP = ?", new String[]{oldIp});
+        db.update(TABLE_NAME_AUTO, contentValues, "IP = ?", new String[]{ip});
         db.close();
     }
 
@@ -310,6 +309,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Automate automate = new Automate();
         SQLiteDatabase db = this.getReadableDatabase();
+
         Cursor cursor = db.query(TABLE_NAME_AUTO,
                 COLUMNS_A,
                 "IP = ? ",
@@ -358,7 +358,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT * FROM " + TABLE_NAME_USER;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
-        User user = null;
+        User user;
 
         if(cursor.moveToFirst()) {
             do {
